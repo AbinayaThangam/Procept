@@ -35,6 +35,6 @@ Route::get('/showevents/{id}/{url?}/{url2?}', [HomeController::class, 'showevent
 Route::get('/filter/coursetitle', [HomeController::class, 'showfiltercourse'])->name('filtercourse.show');
 Route::get('/filter/coursedescription/{id}/{url?}/{url2?}', [HomeController::class, 'showfilterdescription'])->name('filterdescription.show');
 Route::get('/rss-feed', [HomeController::class, 'showRssFeed'])->name('rss.feed');
-
+Route::get('/privacy-policy',[HomeController::class, 'showprivacypolicy'])->name('privacypolicy.show');
 
 
