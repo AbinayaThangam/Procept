@@ -13,9 +13,6 @@ class Block extends Model
     protected $table = 'block';
     protected $fillable = ['bid', 'module', 'delta', 'theme', 'status', 'weight', 'region', 'custom', 'visibility', 'pages', 'title', 'cache', 'css_class'];
 
-    public function blockCopyRight()
-    {
-        return $this->hasMany(BlockCustom::class, 'bid', 'delta');
-    }
+  
 
 }

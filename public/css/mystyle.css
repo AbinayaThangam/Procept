@@ -1377,6 +1377,78 @@ button.event-date-submit {
     font-size: 16px;
     color: white;
 }
+.content-menu-details{
+    background-color: #f6f3e9;
+    margin-top: -6px;
+    height: 415px;
+}
+.content-graphical {
+    padding: 24px;
+}
+h1.text-center.pt-4 {
+    color: #00558b;
+}
+a.register-here {
+    color: #00558b;
+}
+
+.upcoming-courses-instructor,
+.upcoming-courses-course{
+    color: #00558b;
+}
+
+.company-news-list {
+    padding: 15px;
+
+}
+
+.company-news-title {
+    color: #00528a;
+     text-decoration: none;
+
+}
+.company-news-title:hover {
+    text-decoration: underline;
+    color: #00528a;
+}
+
+.company-news-body-summary {
+    font-size: 16px;
+    color: #333;
+}
+a.company-list-see-more {
+    color: #00528a;
+}
+/* contact-form */
+section.contact-form {
+    margin-top: 112px;
+}
+h2.contact-title {
+position: relative;
+margin: 0 0 20px 0;
+padding: 0 0 20px;
+border-bottom: 1px #e2e2e2 solid;
+text-transform: capitalize;
+font-size: 25px;
+color: #00548E;
+}
+.main-color {
+    color: #00548E !important;
+}
+.contact-details h4,
+.contact-details h5 {
+    font-size: 17px;
+    text-transform: none;
+}
+
+.contact-details strong {
+    font-weight: 500;
+}
+.contact-us {
+    margin-top: 44px;
+}
+
+
 
 /* media query start */
 
@@ -1397,6 +1469,8 @@ button.event-date-submit {
     }
     .company-news-list-menu span {
         font-size: 19px;
+
+
     }
    
 }

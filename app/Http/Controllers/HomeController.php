@@ -44,7 +44,10 @@ class HomeController extends Controller
     }
     public function show(Request $request)
     {
-        return view('pages.contactus');
+        $menuBarDetails = $this->homeService->showMenubar($request);
+        $promotionalMessageBar = $this->homeService->showPromotionalMessageBar($request);
+        $contactInfoDetails=$this->homeService->contactInformationBlock($request);
+        return view('pages.contactus',compact('contactInfoDetails','menuBarDetails','promotionalMessageBar'));
     }
     public function index(Request $request)
     {
@@ -55,46 +58,44 @@ class HomeController extends Controller
         $promotionalMessageBar = $this->homeService->showPromotionalMessageBar($request);
         $testimonials = $this->homeService->showTestimonials($request);
         $menuBarDetails = $this->homeService->showMenubar($request);
-       
+        $industryRecLogoslider = $this->homeService->industryRecoginationLogoslider($request);
 
-        return view('welcome', compact('events', 'allCompanyNews', 'upcomingCourses', 'promotionalMessageBar','testimonials','menuBarDetails'));
+        return view('welcome', compact('events', 'allCompanyNews', 'upcomingCourses', 'promotionalMessageBar', 'testimonials', 'menuBarDetails', 'industryRecLogoslider'));
     }
     public function showevents(int $id, Request $request)
     {
         $eventlist = $this->homeService->showevents($id);
         $promotionalMessageBar = $this->homeService->showPromotionalMessageBar($request);
         $menuBarDetails = $this->homeService->showMenubar($request);
-        return view('pages.events.showallevents', compact('eventlist', 'promotionalMessageBar','menuBarDetails'));
+        return view('pages.events.showallevents', compact('eventlist', 'promotionalMessageBar', 'menuBarDetails'));
     }
     public function showWhoWeAre(Request $request)
     {
-        $blockCopyright = $this->homeService->getBlockTableValue($request);
+
         $aboutus = $this->homeService->showWhoWeAre($request);
-        return view('pages.whoweare', compact('aboutus', 'blockCopyright'));
+        return view('pages.whoweare', compact('aboutus'));
     }
     public function showManagementTeam(Request $request)
     {
-        $blockCopyright = $this->homeService->getBlockTableValue($request);
+
         $aboutus = $this->homeService->showManagementTeam($request);
-        return view('pages.management', compact('aboutus', 'blockCopyright'));
+        return view('pages.management', compact('aboutus'));
     }
     public function showPartners(Request $request)
     {
-        $blockCopyright = $this->homeService->getBlockTableValue($request);
+
         $aboutus = $this->homeService->showPartners($request);
-        return view('Pages.partners', compact('aboutus', 'blockCopyright'));
+        return view('Pages.partners', compact('aboutus'));
     }
     public function showEarning(Request $request)
     {
-        $blockCopyright = $this->homeService->getBlockTableValue($request);
         $aboutus = $this->homeService->showEarning($request);
-        return view('Pages.earningcredits', compact('aboutus', 'blockCopyright'));
+        return view('Pages.earningcredits', compact('aboutus'));
     }
     public function showExamPass(Request $request)
     {
-        $blockCopyright = $this->homeService->getBlockTableValue($request);
         $aboutus = $this->homeService->showExamPass($request);
-        return view('Pages.exampassguarantees', compact('aboutus', 'blockCopyright'));
+	return view('Pages.exampassguarantees', compact('aboutus'));
     }
     public function showprivacypolicy(Request $request)
     {
@@ -119,14 +120,12 @@ class HomeController extends Controller
     {
 
         $case = $this->homeService->showCaseStudy($id);
-        $blockCopyright = $this->homeService->getBlockTableValue($request);
-        return view('pages.casestudylist', compact('case', 'blockCopyright'));
+        return view('pages.casestudylist', compact('case'));
     }
     public function showCaseStudies(Request $request)
     {
         $casestudies = $this->homeService->showCaseStudies();
-        $blockCopyright = $this->homeService->getBlockTableValue($request);
-        return view('pages.casestudy', compact('casestudies', 'blockCopyright'));
+        return view('pages.casestudy', compact('casestudies'));
     }
     public function showUpcomingPublicCourse(Request $request)
     {
@@ -159,4 +158,10 @@ class HomeController extends Controller
         $menuBarDetails = $this->homeService->showMenubar($request);
         return view('pages.companynews', compact('allCompanyNews','promotionalMessageBar','menuBarDetails'));
     }
+    public function showRssFeed(Request $request)
+    {
+        $allCompanyNews = $this->homeService->getAllCompanyNews($request);
+        return view('pages.rssfeed', compact('allCompanyNews'));
+    }
+
 }

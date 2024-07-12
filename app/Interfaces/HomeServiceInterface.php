@@ -7,7 +7,6 @@ interface HomeServiceInterface
   public function contact($request);
 
   public function index($request);
-  public function getBlockTableValue($request);
   public function getallevents($request);
   public function showWhoWeAre($request);
   public function showManagementTeam($request);
@@ -27,7 +26,8 @@ interface HomeServiceInterface
   public function showPromotionalMessageBar($request);
   public function showTestimonials($request);
   public function showMenubar($request);
-
-
+  public function industryRecoginationLogoslider($request);
+  public function contactInformationBlock($request);
+ 
 }
 

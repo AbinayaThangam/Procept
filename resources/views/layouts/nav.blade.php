@@ -71,8 +71,8 @@
                         <img src="{{ asset('/img/header_image/Social Media LinkedIn icon.png') }}" alt="LinkedIn Icon"
                             width="15" height="50">
                     </a>
-                    <a href="#">
-                        <img src="{{ asset('/img/header_image/Social Media RSS icon.png') }}" alt="RSS Icon" width="15"
+                     <a href="{{ route('rss.feed') }}" target="_blank">
+                        <img src="{{ asset('/img/header_image/Social Media RSS icon.png') }}" alt="RSS Icon" width="20"
                             height="50">
                     </a>
                 </div>
