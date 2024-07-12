@@ -71,7 +71,11 @@
                         <img src="{{ asset('/img/header_image/Social Media LinkedIn icon.png') }}" alt="LinkedIn Icon"
                             width="15" height="50">
                     </a>
+<<<<<<< Updated upstream
                      <a href="{{ route('rss.feed') }}" target="_blank">
+=======
+                       <a href="{{ route('rss.feed') }}" target="_blank">
+>>>>>>> Stashed changes
                         <img src="{{ asset('/img/header_image/Social Media RSS icon.png') }}" alt="RSS Icon" width="20"
                             height="50">
                     </a>
