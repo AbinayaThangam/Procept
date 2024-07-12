@@ -6,6 +6,7 @@
 @include('layouts.nav')
 @include('layouts.header')
 <section class="container">
+<div class="content-graphical">
     <div class="row">
         <div class="col-md-4 graphical-content-menu">
             <div class="content-menu-title">
@@ -67,12 +68,13 @@
                 <div class="content-menu-btn">
                     <a href="{{  \App\Constants\AppConstants::PROCEPT_COM }}" target="_blank"> <img
                             src="{{asset('/img/services_image/Green Learn More Button.png')}}" alt="learn-icon"></a>
+</div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<section class="upcoming-course-link mt-5">
+<section class="upcoming-course-link">
     <div class="container-fluid ">
         <div class="row d-flex">
             <div class="col-1">
@@ -142,7 +144,7 @@
                         </div>
                     </div>
 
-                    <a href="{{  \App\Constants\AppConstants::ALL_UPCOMING_COURSES }}" target="_blank"> <button
+                      <a href="{{ route('upcoming.public.course.list') }}"  target="_blank"> <button
                             class="upcoming-course-btn-link">ALL UPCOMING COURSES ></button></a>
                 </div>
             </div>
@@ -240,30 +242,28 @@
             <ul class="testimonial-list">
 
                 @foreach ($testimonials as $details)
-                                <li>
-                                    <div class="testimonial-content">
+                <li>
+                    <div class="testimonial-content">
+                        @php
+                        $body_value = isset($details->fieldDataBody->body_value) ? $details->fieldDataBody->body_value :
+                        '';
+                        $field_data_body_value = strip_tags($body_value);
+                        @endphp
+                        <p>{!! '"' . htmlspecialchars($field_data_body_value) . '"' !!}</p>
 
-                                        @php
-                                            $body_value = isset($details->fieldDataBody->body_value) ? $details->fieldDataBody->body_value :
-                                                '';
-                                            $field_data_body_value = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $body_value);
-                                        @endphp
-
-                                        <p>{!! $field_data_body_value !!}</p>
-
-                                        <span><i>{{ @$details->fieldDataFieldSpeaker->field_speaker_value }} </i></span>
-                                    </div>
-                                    <div class="testimonial-image-container">
-                                        @if(
-                                                $details->fieldDataFieldHomepageTestimonialImage->fileManagedHomepageTestimonialImage->filename
-                                                != ''
-                                            )
-                                                                <img class="testimonial-image"
-                                                                    src="{{ asset(\App\Constants\AppConstants::FILE_FOLDER . '/' . @$details->fieldDataFieldHomepageTestimonialImage->fileManagedHomepageTestimonialImage->filename) }}"
-                                                                    alt="">
-                                        @endif
-                                    </div>
-                                </li>
+                        @if(isset($details->fieldDataFieldSpeaker->field_speaker_value))
+                        <span><i>- {{ $details->fieldDataFieldSpeaker->field_speaker_value }}</i></span>
+                        @endif
+                    </div>
+                    <div class="testimonial-image-container">
+                        @if(@$details->fieldDataFieldHomepageTestimonialImage->fileManagedHomepageTestimonialImage->filename
+                        != '')
+                        <img class="testimonial-image"
+                            src="{{ asset(\App\Constants\AppConstants::FILE_FOLDER . '/' . @$details->fieldDataFieldHomepageTestimonialImage->fileManagedHomepageTestimonialImage->filename) }}"
+                            alt="">
+                        @endif
+                    </div>
+                </li>
                 @endforeach
             </ul>
         </div>
@@ -286,8 +286,8 @@
 
             <div class="col-9 mt-5">
                 <div class="news-list mt-2">
-                    <h6>COMPANY NEWS <img src="{{asset('/img/company_news/RSS icon.png')}}" class="rss-news-img"
-                            alt="RSS-icon"></h6>
+                    <h6>COMPANY NEWS  <a href="{{ route('rss.feed') }}" target="_blank"><img src="{{asset('/img/company_news/RSS icon.png')}}" class="rss-news-img"
+                            alt="RSS-icon"></a></h6>
                     <div class="company-news-list d-flex company-news">
                         <div class="company-news-menu">
                             @foreach ($allCompanyNews as $item)
@@ -314,24 +314,38 @@
                                             <span class="title-part-2">{{ $item->titleTwo}}</span></a>
                                         @endif
 
-                                    <span class="body-summary">
-
-                                        @if (strlen($item->fieldDataBody->body_summary) >= 150)
-                                            <span class="short-text">
-                                                {!! substr($item->fieldDataBody->body_summary, 0, 150) !!}...</span>
-                                            <a href="{{ \App\Constants\AppConstants::PROCEPT_COM . $item->url }}"
-                                                target="_blank" class="see-more-link">See more</a>
-                                        @else
-                                            {!! ($item->fieldDataBody->body_summary) !!}
-                                        @endif
+                                <span class="body-summary">
+                                    @if ($item->fieldDataBody->body_summary)
+                                    @if (strlen($item->fieldDataBody->body_summary) >= 150)
+                                    <span class="short-text">
+                                        {!! substr($item->fieldDataBody->body_summary, 0, 150) !!}...
                                     </span>
+                                    <a href="{{ \App\Constants\AppConstants::PROCEPT_COM . $item->url }}"
+                                        target="_blank" class="see-more-link">See more</a>
+                                    @else
+                                    {!! $item->fieldDataBody->body_summary !!}
+                                    @endif
+                                    @elseif ($item->fieldDataBody->body_value)
+                                    @if (strlen($item->fieldDataBody->body_value) >= 150)
+                                    <span class="short-text">
+                                        {!! substr($item->fieldDataBody->body_value, 0, 150) !!}...
+                                    </span>
+                                    <a href="{{ \App\Constants\AppConstants::PROCEPT_COM . $item->url }}"
+                                        target="_blank" class="see-more-link">See more</a>
+                                    @else
+                                    {!! $item->fieldDataBody->body_value !!}
+                                    @endif
+                                    @endif
 
-                                </p>
+                                </span>
+
+                            </p>
                             @endforeach
                         </div>
                     </div>
                     <div class="more-news">
-                        <a href="#"><img src="{{asset('/img/company_news/More Button.png')}}" class="news-more-img"
+                        <a href="{{ route('company.news') }}" target="_blank"><img
+                                src="{{asset('/img/company_news/More Button.png')}}" class="news-more-img"
                                 alt="learn-icon"></a>
                     </div>
                 </div>
@@ -352,45 +366,34 @@
                                 who named us “Continuing Professional Education Provider of the Year”, Institute for
                                 Performance and Learning (I4PL) who gave us their “Gold Award for Training Excellence”,
                                 the Conference Board of Canada, and<i> HR Magazine.</i>
-                            </span><a href="#">View all></a>
+                            </span>
                         </div>
 
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-5 industry-recognition-slider">
                 <div class="logos-slider">
-                    <div class="slide">
-                        <img src="{{asset('/img/industry_recognition/Gold Seal Accreditation logo.png')}}" alt="">
-                    </div>
-                    <div class="slide">
-                        <img src="{{asset('/img/industry_recognition/PMI 2024 ATP logo.png')}}" alt="">
-                    </div>
-                    <div class="slide">
-                        <img src="{{asset('/img/industry_recognition/PMI 2024 ATP logo.png')}}" alt="">
-                    </div>
-                    <div class="slide">
-                        <img src="{{asset('/img/industry_recognition/Gold Seal Accreditation logo.png')}}" alt="">
-                    </div>
-                    <div class="slide">
-                        <img src="{{asset('/img/industry_recognition/PMI 2024 ATP logo.png')}}" alt="">
-                    </div>
-                    <div class="slide">
-                        <img src="{{asset('/img/industry_recognition/Gold Seal Accreditation logo.png')}}" alt="">
-                    </div>
-                    <div class="slide">
-                        <img src="{{asset('/img/industry_recognition/PMI 2024 ATP logo.png')}}" alt="">
-                    </div>
-                    <div class="slide">
-                        <img src="{{asset('/img/industry_recognition/Gold Seal Accreditation logo.png')}}" alt="">
-                    </div>
-                    <div class="slide">
-                        <img src="{{asset('/img/industry_recognition/PMI 2024 ATP logo.png')}}" alt="">
-                    </div>
 
+                    <div class="logos-slider">
+                        @php
+                        $loopCount = 10;
+                        @endphp
+
+                        @for ($i = 0; $i < $loopCount; $i++) @foreach ($industryRecLogoslider as $item) <div
+                            class="slide">
+                            <img src="{{ asset($item) }}">
+                    </div>
+                    @endforeach
+                    @endfor
                 </div>
+
             </div>
+
         </div>
+
+    </div>
+
     </div>
 </section>
 <section class="bottom-menu mt-5 justify-content-between py-5">
@@ -412,7 +415,7 @@
                         <p><a href="tel:1-800-261-6861 ">1-800-261-6861</a> |
                             <a href="mailto:info@procept.com" class="footer-mail-link">info@procept.com</a>
                         </p>
-                        <a href="{{ \App\Constants\AppConstants::CONTACT_PAGE}}" target="_blank"><img
+                        <a href="{{ route('contact.show')}}" target="_blank"><img
                                 src="{{ asset('/img/information/Other Locations Button.png') }}" class="location-btn"
                                 alt="our-location"></a>
                     </div>

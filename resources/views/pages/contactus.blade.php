@@ -1,33 +1,69 @@
 @extends('layouts.home')
-
 @section('content')
-<div class="container mt-5">
-    <h2>Contact Us</h2>
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+@include('layouts.header')
+<section class="contact-form">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+
+                @foreach ($contactInfoDetails as $content)
+                @if ($content->region == App\Constants\AppConstants::CONTENT)
+                <h2 class="contact-title">{{ $content->title }}</h2>
+                <p>{!! preg_replace('/\[[^\]]+\]/', '', $content->body) !!}</p>
+                @endif
+                @endforeach
+                <div class="contact-us">
+                    <form action="{{ route('contact.create') }}" method="POST">
+                        @csrf
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label for="name">Your Name</label>
+                                <input type="text" class="form-control contact-input" id="name" name="name" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="email">Your E-mail Address</label>
+                                <input type="email" class="form-control contact-input" id="email" name="email" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="subject">Subject</label>
+                                <input type="text" class="form-control contact-input" id="subject" name="subject" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="message">Message</label>
+                                <textarea class="form-control contact-input" id="message" name="message" rows="4"
+                                    required></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+
+            </div>
+
+            <div class="col-lg-5 contact-details">
+
+                @foreach ($contactInfoDetails as $content)
+                @if ($content->region == App\Constants\AppConstants::RIGHTSIDEBAR)
+                <h2 class="contact-title">{{ $content->title }}</h2>
+                <p>{!! preg_replace('/\[[^\]]+\]/', '', $content->body) !!}</p>
+                @endif
+                @endforeach
+
+
+            </div>
         </div>
-    @endif
-    <form action="{{ route('contact.create') }}" method="POST">
-        @csrf
-        <div class="form-group w-50">
-            <label for="name">Your Name</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
-        </div>
-        <div class="form-group w-50">
-            <label for="email">Your E-mail Address</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
-        </div>
-        <div class="form-group w-50">
-            <label for="subject">Subject</label>
-            <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter subject" required>
-        </div>
-        <div class="form-group w-50">
-            <label for="message">Message</label>
-            <textarea class="form-control" id="message" name="message" rows="4" placeholder="Enter your message"
-                required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
+    </div>
+</section>
+
+@include('layouts.footer')
 @endsection

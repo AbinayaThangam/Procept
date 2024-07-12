@@ -18,6 +18,12 @@ class AppConstants
     const NODETYPE_EVENTS = 'events';
     const FIELD_EVENT_TYPE_VALUE = 'public';
     const NODE_COURSE_STATUS = '1';
+    const VISIBILITY = '1';
+    const EXCEPTION = 'exception';
+    const CONTENT = 'content';
+    const RIGHTSIDEBAR = 'right_sidebar';
+
+
     const NODETYPE_VACATION = 'vacation';
     const SESSION_TYPE_CONTIGUOUS = 'Contiguous';
     const SESSION_TYPE_BROKEN_UP = 'Broken up';
@@ -25,6 +31,7 @@ class AppConstants
     const NODETYPE_ARTICLE = 'article';
     const FIELD_PUBLIC_VALUE = '1';
     const NODETYPE_HOME_PAGE_TESTIMONIAL = 'home_page_testimonial';
+    const CONTACT ='contact';
 
     // urls
      const TRAINING_URL = 'https://training.procept.com/';
@@ -32,21 +39,21 @@ class AppConstants
     const CONTACT_PAGE = 'https://procept.com/contact';
     const ALL_UPCOMING_COURSES = 'https://procept.com/upcoming-public-sessions';
     const PROCEPT_COM = 'https://procept.com/';
-    const WHO_WE_ARE_URL = 'https://procept.com/who-we-are';
-    const EARN_CREDITS_URL = 'https://procept.com/earn-credits';
-    const EXAM_PASS_GUARANTEE_URL = 'https://procept.com/exam-pass-guarantee';
-    const HISTORY_URL = 'https://procept.com/history';
-    const MANAGEMENT_TEAM_URL = 'https://procept.com/management-team';
-    const CONSULTANTS_URL = 'https://procept.com/consultants';
-    const PARTNERS_URL = 'https://procept.com/partners';
-    const ACCESSIBILITY_POLICY_URL = 'https://procept.com/accessibility-policy';
-    const DIVERSITY_POLICY_URL = 'https://procept.com/diversity-policy';
-    const DRUG_AND_ALCOHOL_POLICY_URL = 'https://procept.com/drug-and-alcohol-policy';
-    const ENVIRONMENTAL_POLICY_URL = 'https://procept.com/environmental-policy';
-    const HEALTH_AND_SAFETY_POLICY_URL = 'https://procept.com/health-and-safety-policy';
-    const POLICY_RECORDING_TRAINING_SESSIONS_URL = 'https://procept.com/policy-recording-training-sessions';
-    const PROCEPT_PRIVACY_POLICY_URL = 'https://procept.com/page/procept-privacy-policy';
-    const VIEW_ALL_PUBLIC_EVENTS_URL = 'https://procept.com/view_allpublicevents';
+    const WHO_WE_ARE_URL ='https://procept.com/who-we-are';
+    const EARN_CREDITS_URL ='https://procept.com/earn-credits';
+    const EXAM_PASS_GUARANTEE_URL ='https://procept.com/exam-pass-guarantee';
+    const HISTORY_URL ='https://procept.com/history';
+    const MANAGEMENT_TEAM_URL ='https://procept.com/management-team';
+    const CONSULTANTS_URL ='https://procept.com/consultants';
+    const PARTNERS_URL ='https://procept.com/partners';
+    const ACCESSIBILITY_POLICY_URL ='https://procept.com/accessibility-policy';
+    const DIVERSITY_POLICY_URL ='https://procept.com/diversity-policy';
+    const DRUG_AND_ALCOHOL_POLICY_URL ='https://procept.com/drug-and-alcohol-policy';
+    const ENVIRONMENTAL_POLICY_URL ='https://procept.com/environmental-policy';
+    const HEALTH_AND_SAFETY_POLICY_URL ='https://procept.com/health-and-safety-policy';
+    const POLICY_RECORDING_TRAINING_SESSIONS_URL ='https://procept.com/policy-recording-training-sessions';
+    const PROCEPT_PRIVACY_POLICY_URL ='https://procept.com/page/procept-privacy-policy';
+    const VIEW_ALL_PUBLIC_EVENTS_URL ='https://procept.com/view_allpublicevents';
 
 
     //File Folder

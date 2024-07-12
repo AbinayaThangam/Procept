@@ -24,10 +24,7 @@ class HomeService implements HomeServiceInterface
     {
         return $this->homeRespository->index($request);
     }
-    public function getBlockTableValue($request)
-    {
-        return $this->homeRespository->getBlockTableData($request);
-    }
+   
     public function getallevents($request)
     {
         return $this->homeRespository->getallevents($request);
@@ -105,6 +102,13 @@ class HomeService implements HomeServiceInterface
     {
         return $this->homeRespository->showMenubar($request);
     }
-   
-  
+    public function industryRecoginationLogoslider($request)
+    {
+        return $this->homeRespository->industryRecoginationLogoslider($request);
+    }
+    public function contactInformationBlock($request)
+    {
+        return $this->homeRespository->contactInformationBlock($request);
+    }
+
 }
