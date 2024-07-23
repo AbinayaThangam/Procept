@@ -19,6 +19,7 @@
     <link href="{{asset('css/mystyle.css')}}" rel="stylesheet">
     <link href="{{asset('css/all.css')}}" rel="stylesheet">
     <link href="{{asset('css/all.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/training.css')}}" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 </head>

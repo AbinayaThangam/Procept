@@ -28,6 +28,11 @@ interface HomeServiceInterface
   public function showMenubar($request);
   public function industryRecoginationLogoslider($request);
   public function contactInformationBlock($request);
- 
+  public function getRssFeed($request);
+  public function getAllUpcomingCourses($request,$course_slug);
+  public function getAllUpcomingCoursesSessions($request,$course_slug);
+  public function showtrainingdetails($id);
+  public function showCourseType($request);
+
 }
 
