@@ -13,6 +13,5 @@ class Block extends Model
     protected $table = 'block';
     protected $fillable = ['bid', 'module', 'delta', 'theme', 'status', 'weight', 'region', 'custom', 'visibility', 'pages', 'title', 'cache', 'css_class'];
 
-  
 
 }

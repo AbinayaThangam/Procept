@@ -1,7 +1,7 @@
 <header class="header-container top-header py-3 justify-content-between">
     <div class="row">
         <div class="col-2 m-auto">
-            <a class="navbar-brand" href="{{ \App\Constants\AppConstants::PROCEPT_COM }}" target="_blank">
+            <a class="navbar-brand" href="{{ config('app_constants.PROCEPT_COM')}}" target="_blank">
                 <img src="{{ asset('/img/header_image/Procept Logo.png') }}" alt="Logo" width="260" height="80">
             </a>
         </div>
@@ -42,7 +42,7 @@
             </div>
         @endforeach
 
-        <a href="{{ \App\Constants\AppConstants::CONTACT_PAGE }}" class="nav-link" target="_blank">Contact</a>
+        <a href="{{ route('contact.show')}}" class="nav-link" target="_blank">Contact</a>
 
         </div>
 
@@ -71,13 +71,13 @@
                         <img src="{{ asset('/img/header_image/Social Media LinkedIn icon.png') }}" alt="LinkedIn Icon"
                             width="15" height="50">
                     </a>
-<<<<<<< Updated upstream
-                     <a href="{{ route('rss.feed') }}" target="_blank">
-=======
+
+                    
+
                        <a href="{{ route('rss.feed') }}" target="_blank">
->>>>>>> Stashed changes
-                        <img src="{{ asset('/img/header_image/Social Media RSS icon.png') }}" alt="RSS Icon" width="20"
-                            height="50">
+
+                        <img src="{{ asset('/img/header_image/Social Media RSS icon.png') }}" alt="RSS Icon" width="15"
+                            height="30">
                     </a>
                 </div>
             </div>

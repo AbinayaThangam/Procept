@@ -5,159 +5,160 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 @include('layouts.nav')
 @include('layouts.header')
-<section class="container">
+
+
+<section id="section-graphical" class="container">
 <div class="content-graphical">
-    <div class="row">
-        <div class="col-md-4 graphical-content-menu">
-            <div class="content-menu-title">
-                <div class="icon-box">
-                    <div class="training-link py-4">
-                        <a href="{{  \App\Constants\AppConstants::TRAINING_URL }}" target="_blank"><img
-                                src="{{asset('/img/services_image/Consulting Icon.png')}}" alt="one1"></a>
-                    </div>
-
-                    <a href="{{  \App\Constants\AppConstants::TRAINING_URL }}" target="_blank">
-                        <h6>TRAINING</h6>
-                    </a>
-                </div>
-                <div class="content-menu-subcontent">
-                    <p>Discover our trained training approach, extensive course catalog, and credit earning
-                        opportunities to advance your career. Start your learning journey with us today!</p>
-                </div>
-                <div class="content-menu-btn">
-                    <a href="{{  \App\Constants\AppConstants::TRAINING_URL }}" target="_blank"> <img
-                            src="{{asset('/img/services_image/Orange Learn More Button.png')}}" alt="learn-icon"></a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 graphical-content-menu">
-
-            <div class="content-menu-title">
+<div class="row justify-content-between">
+    <div class="col-md-4 graphical-content-menu mb-4">
+        <div class="content-menu-title">
+            <div class="icon-box">
                 <div class="training-link py-4">
-                    <a href="{{  \App\Constants\AppConstants::PROCEPT_COM }}" target="_blank"> <img
-                            src="{{asset('/img/services_image/Consulting Icon.png')}}" alt="consulting-icon"></a>
-                </div>
-                <a href="{{  \App\Constants\AppConstants::PROCEPT_COM }}" target="_blank">
-                    <h6>CONSULTING</h6>
-                </a>
-                <div class="content-menu-subcontent">
-                    <p>Unlock success with our consulting services. Benefits from expert advisory support and
-                        explore our detailed case studies.Partner withus to achieve your business goals</p>
-                </div>
-                <div class="content-menu-btn">
-                    <a href="{{  \App\Constants\AppConstants::PROCEPT_COM }}" target="_blank"> <img
-                            src="{{asset('/img/services_image/Blue Learn More Button.png')}}" alt="learn-icon"></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 graphical-content-menu">
-
-            <div class="content-menu-title">
-                <div class="training-link py-4">
-                    <a href="{{  \App\Constants\AppConstants::PROCEPT_COM }}" target="_blank"> <img
+                    <a href="{{ config('app_constants.TRAINING_URL') }}" target="_blank"><img
                             src="{{asset('/img/services_image/Consulting Icon.png')}}" alt="one1"></a>
                 </div>
-                <a href="{{  \App\Constants\AppConstants::PROCEPT_COM }}" target="_blank">
-                    <h6>ABOUT US</h6>
+                <a href="{{  config('app_constants.TRAINING_URL')  }}" target="_blank">
+                    <h6>TRAINING</h6>
                 </a>
-                <div class="content-menu-subcontent">
-                    <p>Discover who we are ,meet our dedicated management team and expert trainers, and learn about
-                        our valued partners.Join us and thrive together</p>
-                </div>
-                <div class="content-menu-btn">
-                    <a href="{{  \App\Constants\AppConstants::PROCEPT_COM }}" target="_blank"> <img
-                            src="{{asset('/img/services_image/Green Learn More Button.png')}}" alt="learn-icon"></a>
+            </div>
+            <div class="content-menu-subcontent">
+                <p>Discover our trained training approach, extensive course catalog, and credit earning
+                    opportunities to advance your career. Start your learning journey with us today!</p>
+            </div>
+            <div class="content-menu-btn">
+                <a href="{{  config('app_constants.TRAINING_URL')  }}" target="_blank"> <img
+                        src="{{asset('/img/services_image/Orange Learn More Button.png')}}" alt="learn-icon"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 graphical-content-menu mb-4">
+        <div class="content-menu-title">
+            <div class="training-link py-4">
+                <a href="{{ config('app_constants.PROCEPT_COM')}}" target="_blank"> <img
+                        src="{{asset('/img/services_image/Consulting Icon.png')}}" alt="consulting-icon"></a>
+            </div>
+            <a href="{{  config('app_constants.PROCEPT_COM') }}" target="_blank">
+                <h6>CONSULTING</h6>
+            </a>
+            <div class="content-menu-subcontent">
+                <p>Unlock success with our consulting services. Benefits from expert advisory support and
+                    explore our detailed case studies. Partner with us to achieve your business goals.</p>
+            </div>
+            <div class="content-menu-btn">
+                <a href="{{  config('app_constants.PROCEPT_COM') }}" target="_blank"> <img
+                        src="{{asset('/img/services_image/Blue Learn More Button.png')}}" alt="learn-icon"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 graphical-content-menu mb-4">
+        <div class="content-menu-title">
+            <div class="training-link py-4">
+                <a href="{{ config('app_constants.PROCEPT_COM')}}" target="_blank"> <img
+                        src="{{asset('/img/services_image/Consulting Icon.png')}}" alt="one1"></a>
+            </div>
+            <a href="{{  config('app_constants.PROCEPT_COM') }}" target="_blank">
+                <h6>ABOUT US</h6>
+            </a>
+            <div class="content-menu-subcontent">
+                <p>Discover who we are, meet our dedicated management team and expert trainers, and learn about
+                    our valued partners. Join us and thrive together.</p>
+            </div>
+            <div class="content-menu-btn about-us-content-menu-btn">
+                <a href="{{  config('app_constants.PROCEPT_COM') }}" target="_blank"> <img
+                        src="{{asset('/img/services_image/Green Learn More Button.png')}}" alt="learn-icon"></a>
+            </div>
+        </div>
+    </div>
 </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 </section>
-<section class="upcoming-course-link">
-    <div class="container-fluid ">
-        <div class="row d-flex">
-            <div class="col-1">
-            </div>
-            <div class="col-7">
-                <div class="course-list mt-2">
-                    <h6>UPCOMING PUBLIC COURSES (ONLINE)</h6><br>
-                    <div class="upcoming-course-list d-flex justify-content-between">
-                        <div class="upcoming-course-date">
-                            <p>START DATE</p>
-                            @foreach ($upcomingCourses as $courses)
-                                                        @php
-                                                            $sessionDate = strtotime($courses->field_choose_session_type_value == 'Contiguous' ?
-                                                                $courses->field_session_dates_value : $courses->field_start_date1_value);
-                                                            $month = date('M', $sessionDate);
-                                                        @endphp
 
-                                                        @if ($month == 'May')
-                                                                                @if (
-                                                                                        $courses->title != 'vacation' ||
-                                                                                        $courses->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title != 'vacation'
-                                                                                    )
 
-                                                                                                        <p>{{ date('M d', $sessionDate) }}</p>
-                                                                                @endif
-                                                        @else
-                                                                                @if (
-                                                                                        $courses->title != 'vacation' ||
-                                                                                        $courses->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title != 'vacation'
-                                                                                    )
-                                                                                                        <p>{{ date('M. d', $sessionDate) }}</p>
-                                                                                @endif
-                                                        @endif
-                            @endforeach
-                        </div>
-                        <div class="upcoming-course-name truncate">
-                            <p>COURSE NAME</p>
-                            @foreach ($upcomingCourses as $course)
-                                                        @if (
-                                                                $course->title != 'vacation' &&
-                                                                $course->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title != 'vacation'
-                                                            )
-                                                                                    <p>
-                                                                                        @if (strlen($course->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title) >= 60)
-                                                                                            <span class="short-text-online-course">
-                                                                                                {!! substr($course->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title, 0, 60) !!}...</span>
-                                                                                            <a href="{{ @$course->fieldDataFieldResaleNode->fieldDataFieldProceptSellTicketCourse->fieldDataFieldIfYesEventbriteLinkResale->field_if_yes_eventbrite_link_value }}"
-                                                                                                target="_blank" class="see-more-link">See more</a>
-                                                                                        @else
-                                                                                            {!! $course->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title !!}
-                                                                                        @endif
-                                                                                    </p>
-                                                        @endif
-                            @endforeach
-                        </div>
-                        <div class="upcoming-course-register mt-4">
-                            <p></p>
-                            @foreach ($upcomingCourses as $courses)
-                                                        @if (
-                                                                $courses->title != 'vacation' ||
-                                                                $courses->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title != 'vacation'
-                                                            )
-                                                                                    <p><a href="{{ @$courses->fieldDataFieldResaleNode->fieldDataFieldProceptSellTicketCourse->fieldDataFieldIfYesEventbriteLinkResale->field_if_yes_eventbrite_link_value }}"
-                                                                                            target="_blank">Register ></a></p>
-                                                        @endif
-                            @endforeach
-                        </div>
+<section id="section-upcoming-courses" class="upcoming-course-link">
+   <div class="container-fluid">
+    <div class="row d-flex mt-3">
+        <div class="col-12 col-md-1">
+        </div>
+        <div class="col-12 col-md-7">
+            <div class="course-list mt-2">
+                <h6>UPCOMING PUBLIC COURSES (ONLINE)</h6><br>
+                <div class="upcoming-course-list d-flex flex-column flex-md-row justify-content-between">
+                    <div class="upcoming-course-date mb-3 mb-md-0">
+                        <p>START DATE</p>
+                        @foreach ($upcomingCourses as $courses)
+                            @php
+                                $sessionDate = strtotime($courses->field_choose_session_type_value == 'Contiguous' ?
+                                    $courses->field_session_dates_value : $courses->field_start_date1_value);
+                                $month = date('M', $sessionDate);
+                            @endphp
+
+                            @if ($month == 'May')
+                                @if (
+                                    $courses->title != 'vacation' ||
+                                    $courses->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title != 'vacation'
+                                )
+                                    <p>{{ date('M d', $sessionDate) }}</p>
+                                @endif
+                            @else
+                                @if (
+                                    $courses->title != 'vacation' ||
+                                    $courses->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title != 'vacation'
+                                )
+                                    <p>{{ date('M. d', $sessionDate) }}</p>
+                                @endif
+                            @endif
+                        @endforeach
                     </div>
-
-                      <a href="{{ route('upcoming.public.course.list') }}"  target="_blank"> <button
-                            class="upcoming-course-btn-link">ALL UPCOMING COURSES ></button></a>
+                    <div class="upcoming-course-name truncate mb-8 mb-md-0">
+                        <p>COURSE NAME</p>
+                        @foreach ($upcomingCourses as $course)
+                            @if (
+                                $course->title != 'vacation' &&
+                                $course->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title != 'vacation'
+                            )
+                                <p>
+                                    @if (strlen($course->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title) >= 60)
+                                        <span class="short-text-online-course">
+                                            {!! substr($course->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title, 0, 60) !!}...</span>
+                                        <a href="{{ @$course->fieldDataFieldResaleNode->fieldDataFieldProceptSellTicketCourse->fieldDataFieldIfYesEventbriteLinkResale->field_if_yes_eventbrite_link_value }}"
+                                           target="_blank" class="see-more-link">See more</a>
+                                    @else
+                                        {!! $course->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title !!}
+                                    @endif
+                                </p>
+                            @endif
+                        @endforeach
+                    </div>
+                    <div class="upcoming-course-register mt-3 mt-md-4">
+                        <p></p>
+                        @foreach ($upcomingCourses as $courses)
+                            @if (
+                                $courses->title != 'vacation' ||
+                                $courses->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title != 'vacation'
+                            )
+                                <p><a href="{{ @$courses->fieldDataFieldResaleNode->fieldDataFieldProceptSellTicketCourse->fieldDataFieldIfYesEventbriteLinkResale->field_if_yes_eventbrite_link_value }}"
+                                      target="_blank">Register ></a></p>
+                            @endif
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-            <div class="col-4 course-img">
-                <img src="{{asset('/img/upcoming_public_courses/AdobeStock_611993696.jpeg')}}"
-                    alt="View All Upcoming Public Courses" class="upcoming-courses-img">
-            </div>
 
+                <a href="{{ route('upcoming.public.course.list') }}" target="_blank">
+                    <button class="upcoming-course-btn-link">ALL UPCOMING COURSES ></button>
+                </a>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 course-img mt-3 mt-md-0">
+            <img src="{{asset('/img/upcoming_public_courses/AdobeStock_611993696.jpeg')}}"
+                 alt="View All Upcoming Public Courses" class="img-fluid upcoming-courses-img">
         </div>
     </div>
-
+</div>
 </section>
-<section class="events">
+<section id="section-events" class="events">
     <div class="container-fluid">
         <div class="row d-flex">
 
@@ -230,7 +231,7 @@
 
 </section>
 
-<section class="customer-saying">
+<section id="section-customer-saying" class="customer-saying">
 
     <div id="carousel" class="customer-saying-carousel w-100" style="position: relative;">
 
@@ -259,8 +260,9 @@
                         @if(@$details->fieldDataFieldHomepageTestimonialImage->fileManagedHomepageTestimonialImage->filename
                         != '')
                         <img class="testimonial-image"
-                            src="{{ asset(\App\Constants\AppConstants::FILE_FOLDER . '/' . @$details->fieldDataFieldHomepageTestimonialImage->fileManagedHomepageTestimonialImage->filename) }}"
+                          src="{{ config('app_constants.FILE_FOLDER') . '/' . @$details->fieldDataFieldHomepageTestimonialImage->fileManagedHomepageTestimonialImage->filename }}"
                             alt="">
+
                         @endif
                     </div>
                 </li>
@@ -272,8 +274,7 @@
         </div>
     </div>
 </section>
-
-<section class="company-news-link">
+<section id="section-company-news" class="company-news-link">
     <div class="container-fluid">
         <div class="row d-flex justify-content-between">
             <div class="col-3">
@@ -286,27 +287,25 @@
 
             <div class="col-9 mt-5">
                 <div class="news-list mt-2">
+
                     <h6>COMPANY NEWS  <a href="{{ route('rss.feed') }}" target="_blank"><img src="{{asset('/img/company_news/RSS icon.png')}}" class="rss-news-img"
                             alt="RSS-icon"></a></h6>
                     <div class="company-news-list d-flex company-news">
                         <div class="company-news-menu">
                             @foreach ($allCompanyNews as $item)
-
                                 @if ($item->filename != '')
                                     <p>
-                                        <a href="{{ \App\Constants\AppConstants::PROCEPT_COM . $item->url }}">
-                                            <img src="{{ asset(\App\Constants\AppConstants::FILE_FOLDER . $item->filename) }}"
-                                                class="menu-news-img mt-4">
+                                        <a href="{{ config('app_constants.PROCEPT_COM') . $item->url }}" target="_blank">
+                                        <img src="{{ config('app_constants.FILE_FOLDER') . '/' . $item->filename }}" class="menu-news-img mt-4">
                                         </a>
                                     </p>
-
                                 @endif
                             @endforeach
                         </div>
                         <div class="company-news-list-menu mt-3">
                             @foreach ($allCompanyNews as $item)
                                 <p class="company-news-content">
-                                    <a href="{{ \App\Constants\AppConstants::PROCEPT_COM . $item->url }}" target="_blank">
+                                    <a href="{{ config('app_constants.PROCEPT_COM') . $item->url }}" target="_blank">
                                         @if($item->titleOne)
                                             <span class="title-part-1">{{ $item->titleTwo }} |</span>
                                             <span class="title-part-2">{{ $item->titleOne}}</span></a>
@@ -320,7 +319,7 @@
                                     <span class="short-text">
                                         {!! substr($item->fieldDataBody->body_summary, 0, 150) !!}...
                                     </span>
-                                    <a href="{{ \App\Constants\AppConstants::PROCEPT_COM . $item->url }}"
+                                    <a href="{{ config('app_constants.PROCEPT_COM'). $item->url }}"
                                         target="_blank" class="see-more-link">See more</a>
                                     @else
                                     {!! $item->fieldDataBody->body_summary !!}
@@ -330,7 +329,7 @@
                                     <span class="short-text">
                                         {!! substr($item->fieldDataBody->body_value, 0, 150) !!}...
                                     </span>
-                                    <a href="{{ \App\Constants\AppConstants::PROCEPT_COM . $item->url }}"
+                                    <a href="{{ $item->url }}"
                                         target="_blank" class="see-more-link">See more</a>
                                     @else
                                     {!! $item->fieldDataBody->body_value !!}
@@ -352,7 +351,7 @@
             </div>
 
 </section>
-<section class="industry-link  mt-5">
+<section id="section-industry-link" class="industry-link mt-5">
     <div class="container">
         <div class="row d-flex justify-content-between">
             <div class="col-6">
@@ -396,13 +395,13 @@
 
     </div>
 </section>
-<section class="bottom-menu mt-5 justify-content-between py-5">
+<section id="section-bottom-menu" class="bottom-menu mt-5 justify-content-between py-5">
     <div class="container">
         <div class="bottom-menu-list">
             <div class="row d-flex">
                 <div class="col-4">
                     <div class="bottom-menu-logo">
-                        <a href="{{ \App\Constants\AppConstants::PROCEPT_COM }}" target="_blank"><img
+                        <a href="{{ config('app_constants.PROCEPT_COM') }}" target="_blank"><img
                                 src="{{ asset('/img/information/Procept Logo.png') }}" alt="Logo" width="260"
                                 height="80"></a>
                     </div>
@@ -427,7 +426,7 @@
                             <li><a href="#">Careers</a></li>
                             <li><a href="#">Paying Bills</a></li>
                             <li><a href="#">Request a Price Quote</a></li>
-                            <li><a href="{{ \App\Constants\AppConstants::CUSTOMER_PORTAL }}" target="_blank">Customer
+                            <li><a href="{{ config('app_constants.CUSTOMER_PORTAL') }}" target="_blank">Customer
                                     Portal</a></li>
                         </ul>
                     </div>

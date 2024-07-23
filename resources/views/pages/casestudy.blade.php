@@ -2,7 +2,7 @@
 
 @extends('layouts.home')
 @section('content')
-@include('layouts.header')
+@include('layouts.nav')
 
 <div class="row-12 text-left">
     @foreach ($casestudies as $casestudy)
