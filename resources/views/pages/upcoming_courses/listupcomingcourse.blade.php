@@ -88,7 +88,8 @@
                                 @endforeach
                             </ul>
 
-
+ </div>
+                            <div class="carousel-dots-container">
                         </div>
                         @endif
                         @if ($upcomingSessionData->isNotEmpty())
@@ -137,9 +138,9 @@
                                         @else
                                         Not Available
                                         @endif<br>
-                                        Starts in {{ $daysUntilSession }} days<br>
+                                        <b>Starts in {{ $daysUntilSession }} days</b> <br>
                                         <a href="{{ @$sessionData->field_if_yes_eventbrite_link_value }}"
-                                            target="_blank">Register ></a>
+                                            target="_blank" class="course-register">Register ></a>
                                     </p>
                                 </div>
 

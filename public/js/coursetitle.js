@@ -75,7 +75,6 @@ $(document).ready(function () {
                     $(".course-item").click(function () {
                         let selectedTitle = $(this).text();
                         let selectedNid = $(this).attr("data-nid");
-
                         let selectedUrl =
                             "/filter/coursedescription/" +
                             $(this).attr("data-nid") +
@@ -86,8 +85,6 @@ $(document).ready(function () {
                         $("#course-summary")
                             .attr("href", selectedUrl)
                             .text(selectedTitle);
-
-
                         $("#selected-nid").val(selectedNid);
                         $(".filter-courses-container").hide();
 
