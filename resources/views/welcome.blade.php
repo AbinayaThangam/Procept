@@ -17,7 +17,7 @@
                     </div>
 
                     <a href="{{  \App\Constants\AppConstants::TRAINING_URL }}" target="_blank">
-                        <h6>TRAINING</h6>
+                        <h6>TRAINING1</h6>
                     </a>
                 </div>
                 <div class="content-menu-subcontent">
