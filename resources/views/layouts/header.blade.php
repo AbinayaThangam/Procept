@@ -5,8 +5,8 @@
             Your browser does not support the video tag.
         </video>
     </div>
-    <div class="container main-content search-filter home-search-box">
-        <div class="search-bar ">
+    <div class="container main-content search-filter home-search-box mt-12">
+        <div class="search-bar mt-8">
             <div class="row g-1 py-5">
                 <div class="search-container">
                     <div class="col-md-10 d-flex home-search-box">

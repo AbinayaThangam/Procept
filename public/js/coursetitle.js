@@ -111,4 +111,32 @@ $(document).ready(function () {
             },
         });
     }
+    if (localStorage.getItem("lastSection")) {
+        var lastSection = localStorage.getItem("lastSection");
+        if ($(lastSection).length) {
+            $("html, body").animate(
+                {
+                    scrollTop: $(lastSection).offset().top,
+                },
+                1000
+            );
+            // Clear the saved section ID from localStorage
+            localStorage.removeItem("lastSection");
+        }
+    }
+
+    // Save the section ID to localStorage when a link is clicked
+    $("a").on("click", function (event) {
+        var sectionId = $(this).attr("href");
+        if (sectionId && sectionId.startsWith("#") && $(sectionId).length) {
+            localStorage.setItem("lastSection", sectionId);
+            event.preventDefault(); // Prevent the default link behavior
+            $("html, body").animate(
+                {
+                    scrollTop: $(sectionId).offset().top,
+                },
+                1000
+            );
+        }
+    });
 });

@@ -4,7 +4,7 @@
             <span class="footer-content">
 
                 © 2005-2023 Procept Associates Ltd. All rights reserved. | <span class="footer-content-link"><a
-                        href="{{ route('privacypolicy.show')}}" target="_blank">Privacy
+                        href="{{ route('privacypolicy.show')}}">Privacy
                         Policy</a></span><br>
 
                 Procept® and the Procept logo are registered marks of Procept Associates Ltd.
