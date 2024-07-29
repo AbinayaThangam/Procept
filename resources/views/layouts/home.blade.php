@@ -8,6 +8,12 @@
     <title>Procept</title>
 
 
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
+
+
     <link rel="icon" href="{{asset('img/favicon.ico')}}" type="image/x-icon">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -40,6 +46,8 @@
         crossorigin="anonymous"></script>
     <script src="{{asset('js/coursetitle.js')}}"></script>
     <script src="{{asset('js/testimonials.js')}}"></script>
+
+
 </body>
 
 

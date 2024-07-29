@@ -198,7 +198,7 @@
                                     <span class="short-event-title">
                                         {{ substr($event->title, 0, 150) }}..
                                     </span>
-                                    <a href="{{ route('showevents', ['id' => $event->nid, 'url' => $event->url]) }}"
+                                    <a href="{{ route('showevents', ['events_slug' => $event->url]) }}"
                                         target="_blank" class="see-more-event">See more</a>
                                 @else
                                     {{ $event->title }}
@@ -211,7 +211,7 @@
                         <div class="upcoming-event-register">
                             @foreach ($events as $event)
 
-                                <p><a href="{{ route('showevents', ['id' => $event->nid, 'url' => $event->url]) }}">Register
+                                <p><a href="{{ route('showevents', ['events_slug' => $event->url]) }}">Register
                                         ></a></p>
                             @endforeach
 

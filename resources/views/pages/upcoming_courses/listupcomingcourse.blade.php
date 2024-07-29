@@ -13,16 +13,17 @@
                     <p>{!! @$courseData->field_abstract_value !!}</p>
                 </div>
             </div>
+
             <div class="upcoming-courses-list-fullleft col-12 col-md-4 mt-0">
 
-              @if ($testimonialsData->isNotEmpty())
-
+                @if (count($testimonialsData) > 0 || (!empty($testimonialsData)))
 
                 <div class="upcoming-courses-content-left">
 
                     <div id="testimonial_carousel" class="testimonial-carousel">
                         <div class="container testimonial-container">
-                            <h6 class="upcoming-courses-testimonials-title">TESTIMONIALS</h6>
+                            <h6 class="upcoming-courses-testimonials-title">TESTIMONIALS
+                                </h6>
                             <ul class="upcoming-testimonial-list">
                                 @foreach ($testimonialsData as $testimonial)
                                 <li>
@@ -72,27 +73,26 @@
                                     src="{{asset('/img/upcoming_public_courses/brochure_button.png')}}"
                                     class="brochue-more-img" alt="learn-icon"></a>
                         </div>
-
-                        @if ($videoTestinomialsData->isNotEmpty())
-
-                        <div class="video-testimonial mt-4">
-                            <h6 class="video-testimonial-title">VIDEO TESTIMONIAL</h6>
-                            <a href="#" target="_blank">
-                                <p>View All</p>
-                            </a>
-                            <ul class="video-testimonial-list">
-                                @foreach ($videoTestinomialsData as $videoData)
-                                <li>
-                                    <p>{!! $videoData->body !!}</p>
-                                </li>
+                      @if(isset($videolinkiframe) && !empty($videolinkiframe))
+                            <div id="video-container">
+                                <h3 class="video-title mt-5">VIDEO TESTIMONIALS</h3>
+                                <a href="#"><span class="testimonial-btn">View all ></span></a>
+                                @foreach($videolinkiframe as $src)
+                                    <div class="video-wrapper">
+                                        <iframe class="video-frame" width="360" height="215" src="{{ $src }}" frameborder="0"
+                                            allow="autoplay clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowfullscreen></iframe>
+                                    </div>
                                 @endforeach
-                            </ul>
+                            </div>
+                            <div id="dots-container">
 
- </div>
-                            <div class="carousel-dots-container">
-                        </div>
+                            </div>
+
                         @endif
-                        @if ($upcomingSessionData->isNotEmpty())
+
+                        @if (count($upcomingSessionData) > 0 || (!empty($upcomingSessionData)))
+
                         <div class="upcoming-courses-sessions">
                             <h6 class="upcoming-courses-sessions-title">UPCOMING SESSIONS</h6>
                             @foreach ($upcomingSessionData as $sessionData)
@@ -146,11 +146,18 @@
 
                             </div>
                             @endforeach
+                            @php
+                                    $currentUrl = url()->current();
+                                    $decodedUrl = urldecode($currentUrl);
+                                    $baseUrl = url()->to('/');
+                                    $relativeUrl = str()->after($decodedUrl, $baseUrl);
+                                    $segment = config('app_constants.COURSES') . '/';
+                                    $relativeUrlAfterSegmentURL = str()->after($relativeUrl, $segment);
 
-
+                                @endphp
 
                             <div class="session-button-details">
-                                <a href="{{ route('upcomingcourses.sessions.list',['course_title_slug'=>request()->course_slug]) }}"
+                                <a href="{{ route('upcomingcourses.sessions.list',['course_title_slug'=>$relativeUrlAfterSegmentURL]) }}"
                                     target="_blank"><img
                                         src="{{asset('/img/upcoming_public_courses/view_all_button.png')}}"
                                         class="session-all-img" alt="learn-icon"></a>

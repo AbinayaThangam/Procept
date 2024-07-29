@@ -1,7 +1,6 @@
 @extends('layouts.home')
 @section('content')
-@include('layouts.nav')
-
+@include('layouts.page_nav')
 <div class="container my-5">
     <div class="card-header">
         <h4 class="mb-0"><span class="allevents-title">View All </span> Company News</h4>

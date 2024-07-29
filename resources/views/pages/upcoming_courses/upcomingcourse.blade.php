@@ -1,14 +1,14 @@
 @extends('layouts.home')
 
 @section('content')
-@include('layouts.nav')
+@include('layouts.page_nav')
 
 <div class="container py-5">
     <div class="card-header">
         <h4 class="mb-0"><span class="allevents-title">Upcoming</span> Public Sessions</h4>
     </div>
     <button class="all-events-list mt-5">
-        <a href="/"> Home </a> <i class='fas'>&#xf0da; </i> Upcoming Public Sessions1
+        <a href="/"> Home </a> <i class='fas'>&#xf0da; </i> Upcoming Public Sessions
     </button>
     <div class="row justify-content mt-5">
         <div class="col-md-6">
@@ -81,12 +81,8 @@
                 @endif
 
                 <td>
-                    @php
-                    $courseUrl = @$courseDetails->course_url;
-                    $urlParts = explode(config('app_constants.CONTENT'), $courseUrl);
-                    $course_slug = count($urlParts) > 1 ? $urlParts[1] : '';
-                    @endphp
-                    <a href="{{ route('upcomingcourses.list', ['course_slug' => trim($course_slug, '/')]) }}"
+                   
+                    <a href="{{ route('upcomingcourses.list', ['course_slug' => @$courseDetails->course_url]) }}"
                         class="upcoming-courses-course" target="_blank">
                         {{ @$courseDetails->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title }}
                     </a>
@@ -96,7 +92,7 @@
                     @if ($courseDetails->field_choose_session_type_value ==
                     config('app_constants.SESSION_TYPE_BROKEN_UP'))
                     @for ($i = 1; $i <= 10; $i++) @if (isset($courseDetails["instructor{$i}_url"])) <p>
-                        <a href="{{ config('app_constants.PROCEPT_COM'). @$courseDetails[" instructor{$i}_url"] }}"
+                        <a href="{{ config('app_constants.PROCEPT_COM'). @$courseDetails["instructor{$i}_url"] }}"
                             class="upcoming-courses-instructor" target="_blank">
                             {{
                             @$courseDetails["fieldDataFieldInstructor{$i}"]->{"fieldDataFieldInstructorNode{$i}"}->title

@@ -6,6 +6,44 @@
             </a>
         </div>
         <div class="col-6 top-menu-bar justify-content-center align-items-center m-auto">
+              {{-- Training MenuBar Details --}}
+              @foreach($trainingMenuBarDetails as $menu)
+              <div class="container">
+                  <div class="dropdown">
+                      <a class="dropdown-toggle" href="{{ $menu['url'] ?? '#' }}" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"
+                      @if (!empty($menu['url'])) target="_blank" @endif>
+                       {{ $menu['title'] }}
+                   </a>
+                      @if(!empty($menu['submenus']))
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                              @foreach($menu['submenus'] as $submenu)
+                                  <li class="dropdown-submenu">
+                                      <a class="dropdown-item {{ !empty($submenu['submenus']) ? 'dropdown-toggle' : '' }}" href="{{ $submenu['url'] ?? '#' }}"
+                                         @if (!empty($submenu['url'])) target="_blank" @endif>
+                                          {{ $submenu['title'] }}
+                                      </a>
+                                      @if(!empty($submenu['submenus']))
+                                          <ul class="dropdown-menu">
+                                              @foreach($submenu['submenus'] as $subsubmenu)
+                                                  <li>
+                                                      {{-- $subsubmenu['url'] ?? '#' --}}
+                                                      <a class="dropdown-item" href="{{ route('course.type.details', ['courses_type' => $subsubmenu['url']]) }}"
+                                                          @if (!empty($subsubmenu['url'])) target="_blank" @endif>
+                                                           {{ $subsubmenu['title'] }}
+                                                       </a>
+
+                                                  </li>
+                                              @endforeach
+                                          </ul>
+                                      @endif
+                                  </li>
+                              @endforeach
+                          </ul>
+                      @endif
+                  </div>
+              </div>
+            @endforeach
+
             @foreach($menuBarDetails as $menu)
             <div class="container">
                 <div class="dropdown">
@@ -83,20 +121,26 @@
                 </div>
             </div>
         </div>
+
         <div class="course-level search-container">
             <div class="col-md-10 d-flex training-search-box">
-                <input placeholder="Search" class="form-control border-0 search-courses">
+                <input placeholder="Search" class="form-control border-0 page-search-courses">
                 <img src="{{ asset('/img/search_and_video/Seach icon.png') }}" alt="search-icon"
-                    class="img-fluid training-search-icon search-courses" style="">
+                    class="img-fluid training-search-icon page-search-courses" style="">
             </div>
-            <div class="filter-courses-container" style="display: none;">
-                <div id="filter-courses-container" class="container" style="display: none;">
-                    <ul id="filter-courses-list" class="list-unstyled" style="display: none;">
 
+
+
+            <div class="filter-page-courses-container" style="display: none;">
+                <div id="filter-page-courses-container" class="container" style="display: none;">
+                    <ul id="filter-courses-list" class="list-unstyled" style="display: none;">
                     </ul>
                 </div>
             </div>
+
+
         </div>
+
     </div>
 </header>
 <div class="message-bar justify-content-center align-items-center">
@@ -132,5 +176,14 @@
             </div>
         </div>
     </div>
+</div>
+<div class="course-navigation d-none">
+    <input type="hidden" id="selected-nid">
+    <input type="hidden" id="selected-node-type">
+    <input type="hidden" id="selected-page-nid">
+
+    <a href="" id="course-summary">
+    </a>
+
 </div>
 </header>
