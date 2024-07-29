@@ -30,8 +30,8 @@ Route::get('/company-news', [HomeController::class, 'getAllCompanyNews'])->name(
 Route::get('/who-we-are', [HomeController::class, 'showWhoWeAre'])->name('who-we-are.show');
 Route::get('/management-team', [HomeController::class, 'showManagementTeam'])->name('managementteam.show');
 Route::get('/partners', [HomeController::class, 'showPartners'])->name('partners.show');
-Route::get('/earningcredits', [HomeController::class, 'showEarning'])->name('earningcredits.show');
-Route::get('/exam-pass-guarantees', [HomeController::class, 'showExamPass'])->name('exampassguarantees.show');
+Route::get('/earn-credits', [HomeController::class, 'showEarncredits'])->name('earningcredits.show');
+Route::get('/exam-pass-guarantees', [HomeController::class, 'showExamPassGuarantess'])->name('exampassguarantees.show');
 Route::get('/case-studies', [HomeController::class, 'showCaseStudies'])->name('casestudies.show');
 Route::get('/casestudy/{id}/{url?}/{url2?}', [HomeController::class, 'showCaseStudy'])->name('casestudy.show');
 Route::get('/upcoming-public-sessions', [HomeController::class, 'showUpcomingPublicCourse'])->name('upcoming.public.course.list');
@@ -71,4 +71,3 @@ Route::get('/events/{events_slug}/{events_slug1?}/{events_slug2?}', [HomeControl
 Route::get('/page/{page_slug}/{page_slug1?}/{page_slug2?}', [HomeController::class, 'getAllBasicPage'])->name('getAllBasicPage');
 Route::get('/team/{team_slug}/{team_slug1?}/{team_slug2?}', [HomeController::class, 'getAllTeam'])->name('getAllTeam');
 
-Route::get('/training-landingpage', [HomeController::class, 'showTrainingLandingPage'])->name('training.landingpage.show');

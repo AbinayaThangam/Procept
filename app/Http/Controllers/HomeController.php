@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\HomeService;
-use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -93,15 +92,25 @@ class HomeController extends Controller
         $aboutus = $this->homeService->showPartners($request);
         return view('Pages.partners', compact('aboutus'));
     }
-    public function showEarning(Request $request)
+    public function showEarncredits(Request $request)
     {
-        $aboutus = $this->homeService->showEarning($request);
-        return view('Pages.earningcredits', compact('aboutus'));
+        $menuBar = $this->homeService->showMenubar($request);
+        $menuBarDetails = $menuBar->menuBarDetails;
+        $trainingMenuBarDetails = $menuBar->trainingMenuBarDetails;
+        $promotionalMessageBar = $this->homeService->showPromotionalMessageBar($request);
+
+        $getEarningCredits = $this->homeService->showEarncredits($request);
+        return view('Pages.earningcredits', compact('getEarningCredits','menuBarDetails','trainingMenuBarDetails','promotionalMessageBar'));
     }
-    public function showExamPass(Request $request)
+    public function showExamPassGuarantess(Request $request)
     {
-        $aboutus = $this->homeService->showExamPass($request);
-        return view('Pages.exampassguarantees', compact('aboutus'));
+        $menuBar = $this->homeService->showMenubar($request);
+        $menuBarDetails = $menuBar->menuBarDetails;
+        $trainingMenuBarDetails = $menuBar->trainingMenuBarDetails;
+        $promotionalMessageBar = $this->homeService->showPromotionalMessageBar($request);
+
+        $getExamPassGuarantess = $this->homeService->showExamPassGuarantess($request);
+        return view('Pages.exampassguarantees', compact('getExamPassGuarantess','menuBarDetails','trainingMenuBarDetails','promotionalMessageBar'));
     }
     public function showprivacypolicy(Request $request)
     {
@@ -310,11 +319,15 @@ class HomeController extends Controller
         $menuBarDetails = $menuBar->menuBarDetails;
         $trainingMenuBarDetails = $menuBar->trainingMenuBarDetails;
         $promotionalMessageBar = $this->homeService->showPromotionalMessageBar($request);
-
+        $upcomingCourses = $this->homeService->showUpcomingCourse($request);
         $getTrainingPage = $this->homeService->getTrainingPage($request);
 
-        return view('pages.training.trainingpage', compact('getTrainingPage', 'menuBarDetails', 'trainingMenuBarDetails', 'promotionalMessageBar'));
+        return view('pages.training.traininglandingpage', compact('getTrainingPage','upcomingCourses','menuBarDetails', 'trainingMenuBarDetails', 'promotionalMessageBar'));
 
+    }
+    public function getCoursesDetails(Request $request,$course_alias, $course_type_alias)
+    {
+        return $this->homeService->getCoursesDetails($request,$course_alias,$course_type_alias);
     }
 
     public function getPMCoursesPage(Request $request)
@@ -326,7 +339,7 @@ class HomeController extends Controller
 
         $PmCoursesPageDetails = $this->homeService->getPMCoursesPage($request);
         $trainingDetails = $PmCoursesPageDetails->trainingDetails;
-        $getPMCourses = $PmCoursesPageDetails->getPMCourses;
+        $getPMCourses = $PmCoursesPageDetails->getCoursesDetails;
 
         return view('pages.upcoming_courses.pmcourses', compact('getPMCourses', 'trainingDetails','menuBarDetails', 'trainingMenuBarDetails', 'promotionalMessageBar'));
 
@@ -341,7 +354,7 @@ class HomeController extends Controller
 
         $CMCoursesPageDetails = $this->homeService->getCMCoursesPage($request);
         $trainingDetails = $CMCoursesPageDetails->trainingDetails;
-        $getCMCourses = $CMCoursesPageDetails->getCMCourses;
+        $getCMCourses = $CMCoursesPageDetails->getCoursesDetails;
 
         return view('pages.upcoming_courses.cmcourses', compact('getCMCourses', 'trainingDetails','menuBarDetails', 'trainingMenuBarDetails', 'promotionalMessageBar'));
 
@@ -356,7 +369,7 @@ class HomeController extends Controller
 
         $BACoursesPageDetails = $this->homeService->getBACoursesPage($request);
         $trainingDetails = $BACoursesPageDetails->trainingDetails;
-        $getBACourses = $BACoursesPageDetails->getBACourses;
+        $getBACourses = $BACoursesPageDetails->getCoursesDetails;
 
         return view('pages.upcoming_courses.bacourses', compact('getBACourses', 'trainingDetails','menuBarDetails', 'trainingMenuBarDetails', 'promotionalMessageBar'));
 
@@ -370,29 +383,12 @@ class HomeController extends Controller
 
         $leadershipCoursesPageDetails = $this->homeService->getleadershipCoursesPage($request);
         $trainingDetails = $leadershipCoursesPageDetails->trainingDetails;
-        $getLeadershipCourses = $leadershipCoursesPageDetails->getLeadershipCourses;
+        $getLeadershipCourses = $leadershipCoursesPageDetails->getCoursesDetails;
 
         return view('pages.upcoming_courses.leadershipcourses', compact('getLeadershipCourses', 'trainingDetails','menuBarDetails', 'trainingMenuBarDetails', 'promotionalMessageBar'));
 
     }
 
-  public function showTrainingLandingPage(Request $request)
-    {
 
-        $promotionalMessageBar = $this->homeService->showPromotionalMessageBar($request);
-        $menuBar = $this->homeService->showMenubar($request);
-        $upcomingCourses = $this->homeService->showUpcomingCourse($request);
-        $menuBarDetails = $menuBar->menuBarDetails;
-        $trainingMenuBarDetails = $menuBar->trainingMenuBarDetails;
-        return view(
-            'pages.training.traininglandingpage',
-            compact(
-                'promotionalMessageBar',
-                'menuBar',
-                'menuBarDetails',
-                'trainingMenuBarDetails',
-                'upcomingCourses'
-            )
-        );
-    }
+
 }

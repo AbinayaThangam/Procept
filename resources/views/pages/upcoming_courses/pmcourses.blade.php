@@ -44,7 +44,7 @@
 
 
                    <a href="{{ route('upcomingcourses.list', ['course_slug' => @$course->course_url]) }}" target="_blank">
-                    <p class="course-info" data-nid='{{ @$course->nid }}' data-route={{ route('upcomingcourses.list', ['course_slug' => trim($course_slug, '/')]) }}>{{ $course->title }}</p>
+                    <p>{{ $course->title }}</p>
                      </a>
 
                     @endif
