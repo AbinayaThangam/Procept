@@ -24,8 +24,13 @@ class AppConstants
     const CONTENT = 'content';
     const RIGHTSIDEBAR = 'right_sidebar';
     const NODE = 'node';
+    const ARTICLE = 'article';
+    const PAGE = 'page';
+    const TEAM = 'team';
+    const COURSES = 'courses';
+    const UPCOMING_SESSIONS = 'upcoming_sessions';
 
-
+    const GENERAL_COURSES = 'General Courses';
     const NODETYPE_VACATION = 'vacation';
     const SESSION_TYPE_CONTIGUOUS = 'Contiguous';
     const SESSION_TYPE_BROKEN_UP = 'Broken up';
@@ -127,5 +132,32 @@ class AppConstants
     const TAXONOMY_COURSE_TYPE_CM_COURSE = 'CM Courses';
     const FIELD_ACTIVE_COURSE_VALUE = '1';
     const TRAINING_URL_149 = '/training/149';
+    const FIELD_RESALES_YES = 'yes';
+    const LOCATION_INPERON = 'in_person';
+
+    const TAXONOMY_TERM_COURSE = 'taxonomy/term/';
+    const MENU_BAR_COURSE_TYPE = 'course-type/';
+
+
+    //Course Type
+    const COURSE_TYPE_PM_COURSES = 'pm-courses';
+    const COURSE_TYPE_BDA_COURSES = 'ba-courses';
+    const COURSE_TYPE_AGILE_COURSES = 'agile-courses';
+    const COURSE_TYPE_CM_COURSES = 'cm-courses';
+    const COURSE_TYPE_IT_COURSES = 'itil-courses';
+    const COURSE_TYPE_LEADERSHIP_COURSES = 'leadership-courses';
+    const COURSE_TYPE_MANAGEMENT_COURSES = 'general-management-courses';
+    const COURSE_TYPE_TRAIN_THE_TRAINER_COURSES = 'train-trainer-courses';
+
+     //Course Type URL
+
+     const  COURSE_TYPE_PM_COURSES_URL= 'page/project-management-courses';
+     const  COURSE_TYPE_BDA_COURSES_URL= 'page/business-data-analysis-courses';
+     const  COURSE_TYPE_AGILE_COURSES_URL= 'page/agile-courses';
+     const  COURSE_TYPE_CM_COURSES_URL= 'change-management-courses';
+     const  COURSE_TYPE_IT_COURSES_URL= 'page/it-management-courses';
+     const  COURSE_TYPE_LEADERSHIP_COURSES_URL= 'page/leadership-courses';
+     const  COURSE_TYPE_MANAGEMENT_COURSES_URL= 'page/management-courses';
+     const  COURSE_TYPE_TRAIN_THE_TRAINER_COURSES_URL= 'page/train-trainer-courses';
 
 }

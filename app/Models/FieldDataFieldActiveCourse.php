@@ -15,6 +15,9 @@ class FieldDataFieldActiveCourse extends Model
         'bundle',
         'deleted',
         'entity_id',
-        'revision_id'
+        'revision_id',
+        'language',
+        'delta',
+        'field_active_course_value'
     ];
 }

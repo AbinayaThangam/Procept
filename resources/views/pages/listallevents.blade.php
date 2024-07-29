@@ -56,9 +56,15 @@
                                 @foreach ($listallevents as $event)
                                     <tr>
                                         <td>
-                                            <a href="{{ route('showevents', ['id' => $event->nid, 'url' => $event->url]) }}"
+                                            @if (@$event->url)
+                                            <a href="{{ route('showevents', ['events_slug' => @$event->url]) }}"
                                                 target="_blank"
                                                 class="text-decoration-none list-all-events">{{ $event->title }}</a>
+                                            @else
+                                            {{ $event->title }}
+                                            @endif
+
+
                                         </td>
                                         <td>{{ $event->formatted_date }}</td>
                                     </tr>

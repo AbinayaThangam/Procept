@@ -20,6 +20,8 @@
             <tr>
                 <th>SESSION DATES</th>
                 <th>INSTRUCTOR</th>
+                <th>Online / In Person</th>
+                <th>REGISTER</th>
             </tr>
         </thead>
         <tbody>
@@ -50,7 +52,7 @@
                     config('app_constants.SESSION_TYPE_BROKEN_UP'))
 
                     @for ($i = 1; $i <= 10; $i++) <p>
-                        <a href="{{ config('app_constants.PROCEPT_COM'). @$courseDetails[" instructor{$i}_url"] }}"
+                        <a href="{{ config('app_constants.PROCEPT_COM'). @$courseDetails["instructor{$i}_url"] }}"
                             class="upcoming-courses-instructor" target="_blank">
 
                             {{
@@ -68,10 +70,36 @@
                         @endif
                 </td>
 
+                <td>
+                    @php
+
+                        if (@$courseDetails->FieldDataFieldSessionLocLocation->fieldDataFieldOnline->field_online_value == config('app_constants.LOCATION_INPERON')) {
+                            $field_online_value = 'In Person';
+                        } elseif (@$courseDetails->FieldDataFieldSessionLocLocation->fieldDataFieldOnline->field_online_value == config('app_constants.LOCATION_ONLINE')) {
+                            $field_online_value = 'Online';
+                        }
+
+                    @endphp
+
+                    {{ @$field_online_value }}    @if (@$courseDetails->FieldDataFieldSessionLocLocation->fieldDataFieldOnline->field_online_value == config('app_constants.LOCATION_INPERON'))
+                    ({{ @$courseDetails->FieldDataFieldSessionLocLocation->fieldDataFieldSessionLocation->FieldDataFieldSessionLocationNode->title }})
+
+                @endif
+
+
+                </td>
+
+           <td>
+            <a href="{{ @$courseDetails->field_if_yes_eventbrite_link_value }}" class="upcoming-courses-instructor" target="_blank">
+              Register
+            </a>
+
+            </td>
             </tr>
             @endforeach
         </tbody>
     </table>
+    {{ $courseSessionsData->links() }}
 
 </div>
 

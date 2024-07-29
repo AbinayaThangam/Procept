@@ -46,9 +46,9 @@ class HomeService implements HomeServiceInterface
     {
         return $this->homeRespository->showWhoWeAre($request);
     }
-    public function showevents($id)
+    public function showevents($request,$events_slug)
     {
-        return $this->homeRespository->showevents($id);
+        return $this->homeRespository->showevents($request,$events_slug);
     }
     public function showManagementTeam($request)
     {
@@ -90,6 +90,8 @@ class HomeService implements HomeServiceInterface
     {
         return $this->homeRespository->showfiltercourse($request);
     }
+
+
     public function showfilterdescription($id)
     {
         return $this->homeRespository->showfilterdescription($id);
@@ -135,15 +137,53 @@ class HomeService implements HomeServiceInterface
     {
         return $this->homeRespository->getAllUpcomingCoursesSessions($request,$course_slug);
     }
-     public function showTrainingDetails($id)
-    {
-        return $this->homeRespository->showTrainingDetails( $id);
-    }
     public function showCourseType($request)
     {
         return $this->homeRespository->showCourseType($request);
     }
+    public function getAllCourseType($request,$course_type_slug)
+    {
+        return $this->homeRespository->getAllCourseType($request,$course_type_slug);
+    }
 
+    public function showfilterPageCourse($request)
+    {
+        return $this->homeRespository->showfilterPageCourse($request);
+    }
+
+    public function getAllArticlePage($request,$article_title_slug)
+    {
+        return $this->homeRespository->getAllArticlePage($request,$article_title_slug);
+    }
+    public function getAllBasicPage($request,$page_slug)
+    {
+        return $this->homeRespository->getAllBasicPage($request,$page_slug);
+    }
+    public function getAllTeam($request,$team_slug)
+    {
+        return $this->homeRespository->getAllTeam($request,$team_slug);
+    }
+    public function getTrainingPage($request)
+    {
+        return $this->homeRespository->getTrainingPage($request);
+    }
+    public function getPMCoursesPage($request)
+    {
+        return $this->homeRespository->getPMCoursesPage($request);
+    }
+    public function getCMCoursesPage($request)
+    {
+        return $this->homeRespository->getCMCoursesPage($request);
+    }
+    public function getBACoursesPage($request)
+    {
+        return $this->homeRespository->getBACoursesPage($request);
+    }
+
+    public function getleadershipCoursesPage($request)
+    {
+        return $this->homeRespository->getleadershipCoursesPage($request);
+    }
 
 }
 

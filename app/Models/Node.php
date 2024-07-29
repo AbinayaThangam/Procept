@@ -4,25 +4,26 @@ namespace App\Models;
 
 use App\Models\FieldDataBody;
 use App\Models\FieldDataFieldCourse;
-use App\Models\FieldDataFieldCourseId;
+use App\Models\FieldDataFieldResale;
 
-use App\Models\FieldDataFieldCourseInstructor;
+use App\Models\FieldDataFieldSpeaker;
+use App\Models\FieldDataFieldCourseId;
 use App\Models\FieldDataFieldDuration;
-use App\Models\FieldDataFieldHomepageTestimonialImage;
-use App\Models\FieldDataFieldInstructorEight;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\FieldDataFieldInstructorOne;
+use App\Models\FieldDataFieldInstructorSix;
+use App\Models\FieldDataFieldInstructorTen;
+use App\Models\FieldDataFieldInstructorTwo;
 use App\Models\FieldDataFieldInstructorFive;
 use App\Models\FieldDataFieldInstructorFour;
 use App\Models\FieldDataFieldInstructorNine;
-use App\Models\FieldDataFieldInstructorOne;
+use App\Models\FieldDataFieldInstructorEight;
 use App\Models\FieldDataFieldInstructorSeven;
-use App\Models\FieldDataFieldInstructorSix;
-use App\Models\FieldDataFieldInstructorTen;
 use App\Models\FieldDataFieldInstructorThree;
-use App\Models\FieldDataFieldInstructorTwo;
-use App\Models\FieldDataFieldResale;
-use App\Models\FieldDataFieldSpeaker;
+use App\Models\FieldDataFieldCourseInstructor;
+use App\Models\FieldDataFieldSessionLocLocation;
+use App\Models\FieldDataFieldHomepageTestimonialImage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Node extends Model
 {
@@ -103,6 +104,10 @@ class Node extends Model
     public function fieldDataFieldDuration()
     {
         return $this->belongsTo(FieldDataFieldDuration::class, 'nid', 'entity_id');
+    }
+    public function FieldDataFieldSessionLocLocation()
+    {
+        return $this->belongsTo(FieldDataFieldSessionLocLocation::class,'nid','entity_id');
     }
 }
 

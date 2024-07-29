@@ -10,7 +10,7 @@ $(document).ready(function () {
             $("#selected-nid").val("");
             $("#course-summary").attr("href", "").text("");
             $(".filter-courses-container").hide();
-            // hide the container when search is empty
+
         }
 
         if (event.keyCode === 13) {
@@ -19,6 +19,7 @@ $(document).ready(function () {
     });
 
     $("img.search-icon").click(function () {
+
         performSearch();
     });
 
@@ -27,7 +28,8 @@ $(document).ready(function () {
         let selectedNid = $("#selected-nid").val();
         let selectedUrl = $("#course-summary").attr("href");
         if (selectedNid && selectedUrl) {
-            window.open(selectedUrl, "_blank");
+            const selectedUrlCourses ='/courses/'+selectedUrl ;
+            window.open(selectedUrlCourses, "_blank");
         } else if (searchValue !== "") {
             getSearchCoursesDetails(searchValue);
         } else {
@@ -64,8 +66,9 @@ $(document).ready(function () {
                         let title = course.title;
                         let nid = course.nid;
                         let url = course.url;
-                        console.log(title);
-                        console.log(nid);
+
+
+
                         console.log(url);
                         $("#filter-courses-container").append(
                             `<li class='list-unstyled course-item' data-nid='${nid}' data-url='${url}' >${title}</li>`
@@ -75,16 +78,14 @@ $(document).ready(function () {
                     $(".course-item").click(function () {
                         let selectedTitle = $(this).text();
                         let selectedNid = $(this).attr("data-nid");
-                        let selectedUrl =
-                            "/filter/coursedescription/" +
-                            $(this).attr("data-nid") +
-                            "/" +
-                            $(this).attr("data-url");
+                        let selectedUrl = $(this).attr("data-url");
 
                         $(".search-courses").val(selectedTitle);
+
                         $("#course-summary")
                             .attr("href", selectedUrl)
                             .text(selectedTitle);
+
                         $("#selected-nid").val(selectedNid);
                         $(".filter-courses-container").hide();
 
@@ -140,3 +141,57 @@ $(document).ready(function () {
         }
     });
 });
+
+// video testimonials
+
+document.addEventListener("DOMContentLoaded", function () {
+    const container = document.getElementById("video-container");
+    if (!container) {
+        console.error("Element with ID 'video-container' not found.");
+        return; // Exit early to prevent further errors
+    }
+    const wrappers = container.querySelectorAll(".video-wrapper");
+    const dotsContainer = document.getElementById("dots-container");
+    let currentIndex = 0;
+
+    function showVideo(index) {
+        // Hide all videos
+        wrappers.forEach((wrapper) => (wrapper.style.display = "none"));
+        // Remove active class from all dots
+        dotsContainer
+            .querySelectorAll(".dot")
+            .forEach((dot) => dot.classList.remove("active"));
+
+        // Show the current video
+        wrappers[index].style.display = "block";
+        // Add active class to the current dot
+        dotsContainer.children[index].classList.add("active");
+    }
+
+    function nextVideo() {
+        currentIndex = (currentIndex + 1) % wrappers.length;
+        showVideo(currentIndex);
+    }
+
+    function createDots() {
+        dotsContainer.innerHTML = ""; // Clear existing dots if any
+        wrappers.forEach((_, index) => {
+            const dot = document.createElement("div");
+            dot.classList.add("dot");
+            dot.addEventListener("click", () => {
+                currentIndex = index;
+                showVideo(currentIndex);
+            });
+            dotsContainer.appendChild(dot);
+        });
+    }
+
+    // Initialize with the first video and dots
+    if (wrappers.length > 0) {
+        createDots();
+        showVideo(currentIndex);
+        // Auto-switch videos every 5 seconds
+        // setInterval(nextVideo, 5000);
+    }
+});
+

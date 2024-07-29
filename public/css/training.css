@@ -39,6 +39,17 @@ body {
     box-shadow: 0 6px 12px rgba(46, 78, 98, 0.12);
     z-index: 2;
 }
+.training.filter-page-courses-container {
+    width: 100%;
+    max-width: 339px;
+    position: relative;
+    left: 38%;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #f1f1f1;
+    box-shadow: 0 6px 12px rgba(46, 78, 98, 0.12);
+    z-index: 2;
+}
 
 
 .col-9.training-content {
@@ -101,7 +112,13 @@ img.img-fluid.training-search-icon.search-courses {
     margin-top: 2%;
     position: relative;
 }
-
+img.img-fluid.training-search-icon.page-search-courses {
+    width: 100%;
+    max-width: 20px;
+    height: 60%;
+    margin-top: 2%;
+    position: relative;
+}
 img.beginner-course-logo,
 img.intermediate-course-logo,
 img.advanced-course-logo {
@@ -218,12 +235,16 @@ p.ad-course {
 p.sub-title-course {
     font-size: 12px;
 }
-section#courses-level-container {
+section#courses-level-container{
     background-color: #f6f3e9;
-    position: relative;
-    margin-top: -4%;
-    height: 1120px;
+    margin-top: -51px;
+
 }
+#advertisement-courses-job{
+    margin-top: -41px;
+}
+
+
 .form-control {
     display: flex;
     width: 100%;
@@ -237,7 +258,7 @@ section#courses-level-container {
 .overlay.training-text-container {
     border: 1px solid #645b5b;
     position: absolute;
-    top: 76px;
+    top: 215px;
     left: 50%;
     transform: translateX(-50%);
     max-width: 958px;
@@ -255,3 +276,143 @@ section#courses-level-container {
     z-index: 5;
 }
 
+/* training landing page */
+img.training-banner {
+    object-fit: cover;
+    width: 100%;
+    height: 300px;
+}
+h3 {
+    text-align: center;
+}
+.overlay.training-landing-container {
+    border: 1px solid #645b5b;
+    position: absolute;
+    top: 215px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 958px;
+    width: 100%;
+    height: auto;
+    background-color: #ebe7e5a6;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    padding: 20px;
+    backdrop-filter: blur(-34px);
+    z-index: 5;
+}
+.col-5th {
+    width: 20%;
+    float: left;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+h4.training-category-title {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    position: relative;
+    margin-top: 30px;
+}
+p.course-category-title {
+    text-align: center;
+    font-size: 15px;
+}
+img.training-courses-button {
+    width: 100%;
+    max-width: 147px;
+    height: auto;
+    margin-top: 13px;
+    position: relative;
+    left: 20px;
+}
+img.training-courses-button.mb-5 {
+    margin-top: -13px;
+}
+img.training-courses-button.mb-3 {
+    margin-top: 24px;
+    position: relative;
+    left: 30px;
+}
+img.training-courses-banner {
+    width: 100%;
+    max-width: 70px;
+    position: relative;
+    left: 33%;
+    margin-top: 49px;
+    transition: transform 0.6s ease;
+    transform-origin: center center;
+}
+
+img.training-courses-banner:hover {
+    transform: rotateY(180deg);
+}
+h4.training-credits-title {
+    color: #84ce05;
+    font-size: 20px;
+    font-weight: 600;
+    position: relative;
+    margin-top: 57px;
+    right: -98px;
+}
+h4.earn-credits-title {
+    color: #ed872b;
+    font-size: 20px;
+    font-weight: 600;
+    position: relative;
+    right: -138px;
+    margin-top: 58px;
+}
+h4.exampass-credits-title {
+    color: #0099ff;
+    font-size: 20px;
+    font-weight: 600;
+    position: relative;
+    right: -98px;
+    margin-top: 58px;
+}
+p.training-credits-content {
+    position: relative;
+    text-align: center;
+    left: 13px;
+
+    font-size: 16px;
+}
+a.training-credits-link {
+    position: relative;
+    left: 37%;
+    color: #84ce05;
+    top: 11%;
+    text-decoration: underline;
+}
+a.earn-credits-link {
+    position: relative;
+    left: 39%;
+    color: #ed872b;
+    text-decoration: underline;
+}
+a.exampass-credits-link {
+    position: relative;
+    left: 39%;
+    color: #0099ff;
+    top: 11%;
+    text-decoration: underline;
+}
+#advertisement-courses-job {
+    margin-top: 53px;
+}
+img.training-ads-banner {
+    height: 350px;
+    max-width: 900px;
+}
+img.newcomer-ads-banner {
+    height: 350px;
+    position: relative;
+    right: 2%;
+    max-width: 677px;
+}
