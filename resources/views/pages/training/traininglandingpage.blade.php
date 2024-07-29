@@ -1,7 +1,7 @@
 @extends('layouts.home')
 
 @section('content')
-@include('layouts.othersnav')
+@include('layouts.page_nav')
 
 <div class="training-landing-banner">
     <img src="{{ asset('/img/training_landing_bg/training_landing_bg.jpeg') }}" alt="training-banner img"
@@ -33,8 +33,8 @@
 
                 <p class="course-category-title">Acquire the skills to effectively plan, execute,
                     and complete projects to maximize benefits.</p>
-                <img src="{{ asset('/img/training_areas/project_management_btn.png') }}"
-                    alt="training-courses-banner img" class="training-courses-button">
+                <a href="{{  route('training.pmcourses.page')  }}" target="_blank"><img src="{{ asset('/img/training_areas/project_management_btn.png') }}"
+                    alt="training-courses-banner img" class="training-courses-button"></a>
             </div>
             <div class="col-5th">
                 <img src="{{ asset('/img/training_areas/change_management_icon.png') }}"
@@ -45,8 +45,8 @@
 
                 <p class="course-category-title">Learn how to successfully
                     manage and implement organizational changes,ensuring smooth transitions.</p>
-                <img src="{{ asset('/img/training_areas/change_management_btn.png') }}"
-                    alt="training-courses-banner img" class="training-courses-button mb-5">
+                    <a href="{{ route('training.cmcourses.page') }}" target="_blank">   <img src="{{ asset('/img/training_areas/change_management_btn.png') }}"
+                    alt="training-courses-banner img" class="training-courses-button mb-5"></a>
             </div>
             <div class="col-5th">
                 <img src="{{ asset('/img/training_areas/business_analytics_icon.png') }}"
@@ -57,8 +57,8 @@
                 <p class="course-category-title">MAster business processes and gain valuable insights from data, driving
                     informed
                     business decisions.</p>
-                <img src="{{ asset('/img/training_areas/business_analytics_btn.png') }}"
-                    alt="training-courses-banner img" class="training-courses-button">
+                    <a href="{{ route('training.bacourses.page') }}" target="_blank"> <img src="{{ asset('/img/training_areas/business_analytics_btn.png') }}"
+                    alt="training-courses-banner img" class="training-courses-button"></a>
             </div>
             <div class="col-5th">
                 <img src="{{ asset('/img/training_areas/leadership_management_icon.png') }}"
@@ -69,8 +69,8 @@
                 <p class="course-category-title">Cultivate the qualities and skills neccessary to craft strategies and
                     inspire others to
                     achieve success.</p>
-                <img src="{{ asset('/img/training_areas/leadership_management_btn.png') }}"
-                    alt="training-courses-banner img" class="training-courses-button">
+                    <a href="{{ route('training.leadershipcourses.page') }}" target="_blank">  <img src="{{ asset('/img/training_areas/leadership_management_btn.png') }}"
+                    alt="training-courses-banner img" class="training-courses-button"></a>
 
             </div>
             <div class="col-5th">
@@ -101,59 +101,62 @@
                         <div class="upcoming-course-date mb-3 mb-md-0">
                             <p>START DATE</p>
                             @foreach ($upcomingCourses as $courses)
-                                                        @php
-                                                            $sessionDate = strtotime($courses->field_choose_session_type_value == 'Contiguous' ?
-                                                                $courses->field_session_dates_value : $courses->field_start_date1_value);
-                                                            $month = date('M', $sessionDate);
-                                                        @endphp
+                            @php
+                            $sessionDate = strtotime($courses->field_choose_session_type_value == 'Contiguous' ?
+                            $courses->field_session_dates_value : $courses->field_start_date1_value);
+                            $month = date('M', $sessionDate);
+                            @endphp
 
-                                                        @if ($month == 'May')
-                                                                                @if (
-                                                                                        $courses->title != 'vacation' ||
-                                                                                        $courses->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title != 'vacation'
-                                                                                    )
-                                                                                                        <p>{{ date('M d', $sessionDate) }}</p>
-                                                                                @endif
-                                                        @else
-                                                                                @if (
-                                                                                        $courses->title != 'vacation' ||
-                                                                                        $courses->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title != 'vacation'
-                                                                                    )
-                                                                                                        <p>{{ date('M. d', $sessionDate) }}</p>
-                                                                                @endif
-                                                        @endif
+                            @if ($month == 'May')
+                            @if (
+                            $courses->title != 'vacation' ||
+                            $courses->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title != 'vacation'
+                            )
+                            <p>{{ date('M d', $sessionDate) }}</p>
+                            @endif
+                            @else
+                            @if (
+                            $courses->title != 'vacation' ||
+                            $courses->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title != 'vacation'
+                            )
+                            <p>{{ date('M. d', $sessionDate) }}</p>
+                            @endif
+                            @endif
                             @endforeach
                         </div>
                         <div class="upcoming-course-name truncate mb-8 mb-md-0">
                             <p>COURSE NAME</p>
                             @foreach ($upcomingCourses as $course)
-                                                        @if (
-                                                                $course->title != 'vacation' &&
-                                                                $course->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title != 'vacation'
-                                                            )
-                                                                                    <p>
-                                                                                        @if (strlen($course->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title) >= 60)
-                                                                                            <span class="short-text-online-course">
-                                                                                                {!! substr($course->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title, 0, 60) !!}...</span>
-                                                                                            <a href="{{ @$course->fieldDataFieldResaleNode->fieldDataFieldProceptSellTicketCourse->fieldDataFieldIfYesEventbriteLinkResale->field_if_yes_eventbrite_link_value }}"
-                                                                                                target="_blank" class="see-more-link">See more</a>
-                                                                                        @else
-                                                                                            {!! $course->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title !!}
-                                                                                        @endif
-                                                                                    </p>
-                                                        @endif
+                            @if (
+                            $course->title != 'vacation' &&
+                            $course->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title != 'vacation'
+                            )
+                            <p>
+                                @if (strlen($course->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title)
+                                >= 60)
+                                <span class="short-text-online-course">
+                                    {!!
+                                    substr($course->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title, 0,
+                                    60) !!}...</span>
+                                <a href="{{ @$course->fieldDataFieldResaleNode->fieldDataFieldProceptSellTicketCourse->fieldDataFieldIfYesEventbriteLinkResale->field_if_yes_eventbrite_link_value }}"
+                                    target="_blank" class="see-more-link">See more</a>
+                                @else
+                                {!! $course->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title !!}
+                                @endif
+                            </p>
+                            @endif
                             @endforeach
                         </div>
                         <div class="upcoming-course-register mt-3 mt-md-4">
                             <p></p>
                             @foreach ($upcomingCourses as $courses)
-                                                        @if (
-                                                                $courses->title != 'vacation' ||
-                                                                $courses->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title != 'vacation'
-                                                            )
-                                                                                    <p><a href="{{ @$courses->fieldDataFieldResaleNode->fieldDataFieldProceptSellTicketCourse->fieldDataFieldIfYesEventbriteLinkResale->field_if_yes_eventbrite_link_value }}"
-                                                                                            target="_blank">Register ></a></p>
-                                                        @endif
+                            @if (
+                            $courses->title != 'vacation' ||
+                            $courses->fieldDataFieldCourseNodeDetails->fieldDataFieldCourseNode->title != 'vacation'
+                            )
+                            <p><a href="{{ @$courses->fieldDataFieldResaleNode->fieldDataFieldProceptSellTicketCourse->fieldDataFieldIfYesEventbriteLinkResale->field_if_yes_eventbrite_link_value }}"
+                                    target="_blank">Register ></a></p>
+                            @endif
                             @endforeach
                         </div>
                     </div>
@@ -182,13 +185,13 @@
             <h4 class="earn-credits-title">EARN CREDITS</h4>
             <p class="training-credits-content">Our courses help you earn valuable
                 professional certification and continuing education credits to advance your career.</p>
-            <a href="#" class="earn-credits-link">Learn more ></a>
+            <a href="{{ route('earningcredits.show') }}" class="earn-credits-link" target="_blank">Learn more ></a>
         </div>
         <div class="col-4">
             <h4 class="exampass-credits-title">EXAM PASS GUARANTEE</h4>
             <p class="training-credits-content">We stand by our training with an exam pass guarantee,ensuring you
                 achieve your certification goals.</p>
-            <a href="#" class="exampass-credits-link">Learn more ></a>
+            <a href="{{ route('exampassguarantees.show') }}" class="exampass-credits-link" target="_blank">Learn more ></a>
         </div>
     </div>
 </section>

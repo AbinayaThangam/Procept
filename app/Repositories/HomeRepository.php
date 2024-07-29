@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-
 use Exception;
 use DOMDocument;
 use Carbon\Carbon;
@@ -11,7 +10,6 @@ use App\Models\Block;
 use App\Models\Contact;
 use App\Models\UrlAlias;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Mail\ContactFormMail;
 use App\Models\FieldDataBody;
 use App\Constants\AppConstants;
@@ -190,12 +188,12 @@ class HomeRepository
         return $this->getContentByAlias(AppConstants::PARTNERS_ALIAS);
 
     }
-    public function showEarning($request)
+    public function showEarncredits($request)
     {
         return $this->getContentByAlias(AppConstants::EARNING_CREDITS_ALIAS);
 
     }
-    public function showExamPass($request)
+    public function showExamPassGuarantess($request)
     {
         return $this->getContentByAlias(AppConstants::EXAM_PASS_GUARANTEES_ALIAS);
 
@@ -237,6 +235,7 @@ class HomeRepository
                 $aboutus = Node::leftJoin('field_data_body', 'field_data_body.entity_id', '=', 'node.nid')
                     ->where('node.nid', '=', $value)
                     ->select('node.title', 'field_data_body.body_value')
+                    ->where('node.status', AppConstants::NODE_STATUS)
                     ->first();
 
                 if ($aboutus) {
@@ -718,7 +717,7 @@ class HomeRepository
 
             $trainingMenuBarDetails = [
                 [
-                    'title' => AppConstants::MENU_TRAINING,
+                    'title' => AppConstants::MENU_TRAINING,'url' => route('training.page'),
                     'submenus' => [
                         [
                             'title' => AppConstants::SUBMENU_COURSE_CATALOGUE,
@@ -950,7 +949,7 @@ class HomeRepository
                  ->where('status', AppConstants::NODE_STATUS)
                  ->where('theme', AppConstants::EXCEPTION)->first();
 
-if ($getVideoTestinomials && !empty($getVideoTestinomials->body)) {
+            if ($getVideoTestinomials && !empty($getVideoTestinomials->body)) {
 
                 $dom = new DOMDocument();
                 libxml_use_internal_errors(true);
@@ -1341,11 +1340,11 @@ if ($getVideoTestinomials && !empty($getVideoTestinomials->body)) {
     {
         return (object) [];
     }
-
-    public function getPMCoursesPage($request): object
+    public function getCoursesDetails($request, $course_alias, $course_type_alias): object
     {
+
         try {
-            $urlAlias = UrlAlias::where('alias', AppConstants::MENU_BAR_COURSE_TYPE.AppConstants::COURSE_TYPE_PM_COURSES)->first();
+            $urlAlias = UrlAlias::where('alias', AppConstants::MENU_BAR_COURSE_TYPE.$course_type_alias)->first();
 
             $taxonomyTermCourse = preg_quote(AppConstants::TAXONOMY_TERM_COURSE, '/');
             $pattern = '/' . $taxonomyTermCourse . '(\d+)/';
@@ -1358,7 +1357,7 @@ if ($getVideoTestinomials && !empty($getVideoTestinomials->body)) {
 
             $nodeId = $matches[1];
 
-            $getPMCourses = TaxonomyVocabulary::where('taxonomy_vocabulary.machine_name', AppConstants::TAXONOMY_VOCABULARY_NAME)
+            $getCoursesDetails = TaxonomyVocabulary::where('taxonomy_vocabulary.machine_name', AppConstants::TAXONOMY_VOCABULARY_NAME)
             ->leftJoin('taxonomy_term_data', 'taxonomy_vocabulary.vid', '=', 'taxonomy_term_data.vid')
             ->leftJoin('field_data_field_course_level', 'taxonomy_term_data.tid', '=', 'field_data_field_course_level.field_course_level_tid')
             ->leftJoin('node', 'field_data_field_course_level.entity_id', '=', 'node.nid')
@@ -1378,16 +1377,16 @@ if ($getVideoTestinomials && !empty($getVideoTestinomials->body)) {
                 return $getPMCourses;
             });
 
-            $trainingDetails = $this->getContentByAlias(AppConstants::COURSE_TYPE_PM_COURSES_URL);
+            $trainingDetails = $this->getContentByAlias($course_alias);
 
             return (object) [
                 'trainingDetails' => $trainingDetails,
-                'getPMCourses' => $getPMCourses
+                'getCoursesDetails' => $getCoursesDetails
             ];
         } catch (\Exception $e) {
 
-            Log::error('Error in fetching Project Management Courses Page', [
-                'function' => 'getPMCoursesPage',
+            Log::error('Error in fetching Courses Page Details', [
+                'function' => 'getCoursesDetails',
                 'line' => $e->getLine(),
                 'message' => $e->getMessage()
             ]);
@@ -1396,168 +1395,30 @@ if ($getVideoTestinomials && !empty($getVideoTestinomials->body)) {
         }
 
     }
-
-    public function getCMCoursesPage($request): object
+    public function getPMCoursesPage($request)
     {
-        try {
-            $urlAlias = UrlAlias::where('alias', AppConstants::MENU_BAR_COURSE_TYPE.AppConstants::COURSE_TYPE_CM_COURSES)->first();
-
-            $taxonomyTermCourse = preg_quote(AppConstants::TAXONOMY_TERM_COURSE, '/');
-            $pattern = '/' . $taxonomyTermCourse . '(\d+)/';
-            $matches = [];
-            if (preg_match($pattern, $urlAlias->source, $matches)) {
-                $nodeId = $matches[1];
-            } else {
-                $nodeId = null;
-            }
-
-            $nodeId = $matches[1];
-
-            $getCMCourses = TaxonomyVocabulary::where('taxonomy_vocabulary.machine_name', AppConstants::TAXONOMY_VOCABULARY_NAME)
-            ->leftJoin('taxonomy_term_data', 'taxonomy_vocabulary.vid', '=', 'taxonomy_term_data.vid')
-            ->leftJoin('field_data_field_course_level', 'taxonomy_term_data.tid', '=', 'field_data_field_course_level.field_course_level_tid')
-            ->leftJoin('node', 'field_data_field_course_level.entity_id', '=', 'node.nid')
-            ->leftJoin('field_data_field_course_id', 'node.nid', '=', 'field_data_field_course_id.entity_id')
-            ->leftJoin('field_data_field_course_type', 'node.nid', '=', 'field_data_field_course_type.entity_id')
-            ->leftJoin('field_data_field_duration', 'field_data_field_course_type.entity_id', '=', 'field_data_field_duration.entity_id')
-            ->join('field_data_field_active_course', 'field_data_field_active_course.entity_id', '=', 'node.nid')
-            ->where('field_data_field_course_type.field_course_type_tid', '=', $nodeId)
-            ->where('node.status', AppConstants::NODE_STATUS)
-            ->where('field_data_field_active_course.field_active_course_value', AppConstants::FIELD_PUBLIC_VALUE)
-            ->orderBy('node.title', 'asc')
-            ->get()->map(function ($getCMCourses) {
-                $urlAlias = UrlAlias::where('source', '=', 'node/' . $getCMCourses->entity_id)
-                    ->select('alias')
-                    ->first();
-                $getCMCourses->course_url = !empty($urlAlias) ? $urlAlias->alias : '';
-                return $getCMCourses;
-            });
-
-            $trainingDetails = $this->getContentByAlias(AppConstants::COURSE_TYPE_CM_COURSES_URL);
-
-            return (object) [
-                'trainingDetails' => $trainingDetails,
-                'getCMCourses' => $getCMCourses
-            ];
-        } catch (\Exception $e) {
-
-            Log::error('Error in fetching Change Management Courses Page', [
-                'function' => 'getCMCoursesPage',
-                'line' => $e->getLine(),
-                'message' => $e->getMessage()
-            ]);
-
-            return (object) [];
-        }
-
+        $course_alias = AppConstants::COURSE_TYPE_PM_COURSES_URL;
+        $course_type_alias = AppConstants::COURSE_TYPE_PM_COURSES;
+        return $this->getCoursesDetails($request, $course_alias, $course_type_alias);
     }
-    public function getBACoursesPage($request): object
+    public function getCMCoursesPage($request)
     {
-        try {
-            $urlAlias = UrlAlias::where('alias', AppConstants::MENU_BAR_COURSE_TYPE.AppConstants::COURSE_TYPE_BDA_COURSES)->first();
-
-            $taxonomyTermCourse = preg_quote(AppConstants::TAXONOMY_TERM_COURSE, '/');
-            $pattern = '/' . $taxonomyTermCourse . '(\d+)/';
-            $matches = [];
-            if (preg_match($pattern, $urlAlias->source, $matches)) {
-                $nodeId = $matches[1];
-            } else {
-                $nodeId = null;
-            }
-
-            $nodeId = $matches[1];
-
-            $getBACourses = TaxonomyVocabulary::where('taxonomy_vocabulary.machine_name', AppConstants::TAXONOMY_VOCABULARY_NAME)
-            ->leftJoin('taxonomy_term_data', 'taxonomy_vocabulary.vid', '=', 'taxonomy_term_data.vid')
-            ->leftJoin('field_data_field_course_level', 'taxonomy_term_data.tid', '=', 'field_data_field_course_level.field_course_level_tid')
-            ->leftJoin('node', 'field_data_field_course_level.entity_id', '=', 'node.nid')
-            ->leftJoin('field_data_field_course_id', 'node.nid', '=', 'field_data_field_course_id.entity_id')
-            ->leftJoin('field_data_field_course_type', 'node.nid', '=', 'field_data_field_course_type.entity_id')
-            ->leftJoin('field_data_field_duration', 'field_data_field_course_type.entity_id', '=', 'field_data_field_duration.entity_id')
-            ->join('field_data_field_active_course', 'field_data_field_active_course.entity_id', '=', 'node.nid')
-            ->where('field_data_field_course_type.field_course_type_tid', '=', $nodeId)
-            ->where('node.status', AppConstants::NODE_STATUS)
-            ->where('field_data_field_active_course.field_active_course_value', AppConstants::FIELD_PUBLIC_VALUE)
-            ->orderBy('node.title', 'asc')
-            ->get()->map(function ($getBACourses) {
-                $urlAlias = UrlAlias::where('source', '=', 'node/' . $getBACourses->entity_id)
-                    ->select('alias')
-                    ->first();
-                $getBACourses->course_url = !empty($urlAlias) ? $urlAlias->alias : '';
-                return $getBACourses;
-            });
-
-            $trainingDetails = $this->getContentByAlias(AppConstants::COURSE_TYPE_BDA_COURSES_URL);
-
-            return (object) [
-                'trainingDetails' => $trainingDetails,
-                'getBACourses' => $getBACourses
-            ];
-        } catch (\Exception $e) {
-
-            Log::error('Error in fetching Business & Data Analysis Courses Page', [
-                'function' => 'getBACoursesPage',
-                'line' => $e->getLine(),
-                'message' => $e->getMessage()
-            ]);
-
-            return (object) [];
-        }
-
+        $course_alias = AppConstants::COURSE_TYPE_CM_COURSES_URL;
+        $course_type_alias = AppConstants::COURSE_TYPE_CM_COURSES;
+        return $this->getCoursesDetails($request, $course_alias, $course_type_alias);
     }
-    public function getleadershipCoursesPage($request): object
+
+    public function getBACoursesPage($request)
     {
-        try {
-            $urlAlias = UrlAlias::where('alias', AppConstants::MENU_BAR_COURSE_TYPE.AppConstants::COURSE_TYPE_LEADERSHIP_COURSES)->first();
-
-            $taxonomyTermCourse = preg_quote(AppConstants::TAXONOMY_TERM_COURSE, '/');
-            $pattern = '/' . $taxonomyTermCourse . '(\d+)/';
-            $matches = [];
-            if (preg_match($pattern, $urlAlias->source, $matches)) {
-                $nodeId = $matches[1];
-            } else {
-                $nodeId = null;
-            }
-
-            $nodeId = $matches[1];
-
-            $getLeadershipCourses = TaxonomyVocabulary::where('taxonomy_vocabulary.machine_name', AppConstants::TAXONOMY_VOCABULARY_NAME)
-            ->leftJoin('taxonomy_term_data', 'taxonomy_vocabulary.vid', '=', 'taxonomy_term_data.vid')
-            ->leftJoin('field_data_field_course_level', 'taxonomy_term_data.tid', '=', 'field_data_field_course_level.field_course_level_tid')
-            ->leftJoin('node', 'field_data_field_course_level.entity_id', '=', 'node.nid')
-            ->leftJoin('field_data_field_course_id', 'node.nid', '=', 'field_data_field_course_id.entity_id')
-            ->leftJoin('field_data_field_course_type', 'node.nid', '=', 'field_data_field_course_type.entity_id')
-            ->leftJoin('field_data_field_duration', 'field_data_field_course_type.entity_id', '=', 'field_data_field_duration.entity_id')
-            ->join('field_data_field_active_course', 'field_data_field_active_course.entity_id', '=', 'node.nid')
-            ->where('field_data_field_course_type.field_course_type_tid', '=', $nodeId)
-            ->where('node.status', AppConstants::NODE_STATUS)
-            ->where('field_data_field_active_course.field_active_course_value', AppConstants::FIELD_PUBLIC_VALUE)
-            ->orderBy('node.title', 'asc')
-            ->get()->map(function ($getLeadershipCourses) {
-                $urlAlias = UrlAlias::where('source', '=', 'node/' . $getLeadershipCourses->entity_id)
-                    ->select('alias')
-                    ->first();
-                $getLeadershipCourses->course_url = !empty($urlAlias) ? $urlAlias->alias : '';
-                return $getLeadershipCourses;
-            });
-
-            $trainingDetails = $this->getContentByAlias(AppConstants::COURSE_TYPE_LEADERSHIP_COURSES_URL);
-
-            return (object) [
-                'trainingDetails' => $trainingDetails,
-                'getLeadershipCourses' => $getLeadershipCourses
-            ];
-        } catch (\Exception $e) {
-
-            Log::error('Error in fetching Business & Data Analysis Courses Page', [
-                'function' => 'getleadershipCoursesPage',
-                'line' => $e->getLine(),
-                'message' => $e->getMessage()
-            ]);
-
-            return (object) [];
-        }
-
+        $course_alias = AppConstants::COURSE_TYPE_BDA_COURSES_URL;
+        $course_type_alias = AppConstants::COURSE_TYPE_BDA_COURSES;
+        return $this->getCoursesDetails($request, $course_alias, $course_type_alias);
+    }
+    public function getleadershipCoursesPage($request)
+    {
+        $course_alias = AppConstants::COURSE_TYPE_LEADERSHIP_COURSES_URL;
+        $course_type_alias = AppConstants::COURSE_TYPE_LEADERSHIP_COURSES;
+        return $this->getCoursesDetails($request, $course_alias, $course_type_alias);
     }
 
 }

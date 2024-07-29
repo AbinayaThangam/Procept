@@ -58,13 +58,13 @@ class HomeService implements HomeServiceInterface
     {
         return $this->homeRespository->showPartners($request);
     }
-    public function showEarning($request)
+    public function showEarncredits($request)
     {
-        return $this->homeRespository->showEarning($request);
+        return $this->homeRespository->showEarncredits($request);
     }
-    public function showExamPass($request)
+    public function showExamPassGuarantess($request)
     {
-        return $this->homeRespository->showExamPass($request);
+        return $this->homeRespository->showExamPassGuarantess($request);
     }
     public function showprivacypolicy($request)
     {
@@ -167,6 +167,11 @@ class HomeService implements HomeServiceInterface
     {
         return $this->homeRespository->getTrainingPage($request);
     }
+    public function getCoursesDetails($request,$course_alias,$course_type_alias)
+    {
+        return $this->homeRespository->getCoursesDetails($request,$course_alias,$course_type_alias);
+    }
+
     public function getPMCoursesPage($request)
     {
         return $this->homeRespository->getPMCoursesPage($request);

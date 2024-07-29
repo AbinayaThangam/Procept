@@ -11,8 +11,8 @@ interface HomeServiceInterface
   public function showWhoWeAre($request);
   public function showManagementTeam($request);
   public function showPartners($request);
-  public function showEarning($request);
-  public function showExamPass($request);
+  public function showEarncredits($request);
+  public function showExamPassGuarantess($request);
   public function showCaseStudies();
   public function showUpcomingCourse($request);
   public function showUpcomingPublicCourse($request);
@@ -39,11 +39,13 @@ interface HomeServiceInterface
  public function getAllBasicPage($request,$page_slug);
  public function getAllTeam($request,$team_slug);
  public function getTrainingPage($request);
+ public function getCoursesDetails($request,$course_alias, $course_type_alias);
  public function getPMCoursesPage($request);
  public function getCMCoursesPage($request);
  public function getBACoursesPage($request);
  public function getleadershipCoursesPage($request);
 
 }
+
 
 

@@ -26,7 +26,7 @@
                     opportunities to advance your career. Start your learning journey with us today!</p>
             </div>
             <div class="content-menu-btn">
-                <a href="{{  config('app_constants.TRAINING_URL')  }}" target="_blank"> <img
+                <a href="{{  route('training.page')  }}" target="_blank"> <img
                         src="{{asset('/img/services_image/Orange Learn More Button.png')}}" alt="learn-icon"></a>
             </div>
         </div>
