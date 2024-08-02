@@ -141,9 +141,7 @@
 
 <section id="section-upcoming-courses-page">
     <div class="container-fluid">
-        <div class="row d-flex">
-
-            <div class="col-12 col-md-1"></div>
+        <div class="row d-flex justify-content-end gap-5">
             <div class="col-12 col-md-7">
                 <div class="upcoming-courses-content">
                     <p>
