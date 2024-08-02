@@ -11,7 +11,7 @@
 }
 
 body {
-    overflow-x: hidden; 
+    overflow-x: hidden;
     font-family: 'Acumin Variable Concept SemiCondensed', sans-serif;
 }
 .header-container{
@@ -22,7 +22,7 @@ body {
 .top-header{
     background-color: #fff;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  
+
     padding: 0 24px;
     align-items: center;
     height: 100%;
@@ -115,7 +115,7 @@ body {
 }
 video {
     width: 100%;
-    
+
 }
 
 .overlay {
@@ -1613,11 +1613,10 @@ p.position-text {
 
     font-size: 20px;
 }
-
-.upcoming-courses-content h2,
-.upcoming-courses-content h3 {
+.upcoming-courses-content h2, .upcoming-courses-content h3 {
     color: #009bfa;
     font-size: 20px;
+    font-weight: 600;
     text-transform: uppercase;
     margin: 0 0 10px;
     font-family: 'Acumin Variable Concept SemiCondensed', sans-serif;
@@ -1664,8 +1663,9 @@ i.fas.fa-quote-right {
 }
 h3.video-title.mt-5 {
     margin-right: 39%;
+    font-size: 20px;
+    font-weight: 600;
 }
-
 
 /* new changes dot testimonial */
 div#dots-container {
@@ -2719,7 +2719,7 @@ li.nested-menu-item :hover {
             left: 5%;
         }
 
-    
+
 }
 @media only screen and (min-width: 900px) and (max-width: 1440px) {
     .container.main-content.search-filter.home-search-box {
@@ -2836,7 +2836,7 @@ li.nested-menu-item :hover {
         font-weight: 400;
         line-height: 1.5;
     }
-   
+
 
     .footer-section {
         background-color: #8696a1;
@@ -2989,7 +2989,7 @@ li.nested-menu-item :hover {
         position: relative;
         margin-left: -49px;
     }
-   
+
     .mt-5 {
         margin-top: 1rem !important;
     }
@@ -3452,7 +3452,7 @@ li.nested-menu-item :hover {
 }
 
 .menu-item a:hover {
-    color: #00528a; 
+    color: #00528a;
 }
 
 .sub-menu-item a:hover {
@@ -3486,7 +3486,6 @@ li.nested-menu-item :hover {
 }
 
 
-
 button.dexp-btn-reflect {
     color: #fff;
     border: none;
@@ -3498,5 +3497,20 @@ button.dexp-btn-reflect {
 }
 
 
-/* new changes 1-08 */
+/* paying_us page */
+.paying-us-page table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.paying-us-page th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.paying-us-page th {
+    background-color: #f4f4f4;
+}
 

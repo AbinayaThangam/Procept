@@ -470,3 +470,8 @@ img.individualcourse-banner-image {
 .container.individualcourse-management {
     margin-top: 11px;
 }
+h2.mb-3.individualcourse-title {
+    font-size: 26px;
+    font-weight: 600;
+    color: #00528a;
+}

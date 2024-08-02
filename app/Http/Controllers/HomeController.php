@@ -383,15 +383,15 @@ class HomeController extends Controller
         $menuBarDetails = $menuBar->menuBarDetails;
         $promotionalMessageBar = $this->homeService->showPromotionalMessageBar($request);
         $canadaJobGrantPage = $this->homeService->getCanadaJobGrantPage($request);
-        return view('pages.basic_page.canada_job_grant',compact('canadaJobGrantPage','menuBarDetails','promotionalMessageBar'));
+        return view('pages.basic_page.canada_job_grant', compact('canadaJobGrantPage', 'menuBarDetails', 'promotionalMessageBar'));
     }
-  public function getPayingUsPage(Request $request)
+    public function getPayingUsPage(Request $request)
     {
         $menuBar = $this->homeService->showMenubar($request);
         $menuBarDetails = $menuBar->menuBarDetails;
         $promotionalMessageBar = $this->homeService->showPromotionalMessageBar($request);
         $payingUsPage = $this->homeService->getPayingUsPage($request);
-        return view('pages.basic_page.paying_us',compact('payingUsPage','menuBarDetails','promotionalMessageBar'));
+        return view('pages.basic_page.paying_us', compact('payingUsPage', 'menuBarDetails', 'promotionalMessageBar'));
     }
 
 
