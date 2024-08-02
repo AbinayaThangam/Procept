@@ -44,6 +44,9 @@ interface HomeServiceInterface
  public function getCMCoursesPage($request);
  public function getBACoursesPage($request);
  public function getleadershipCoursesPage($request);
+ public function getCourseTypeImageDetails($course_type_url);
+ public function getCanadaJobGrantPage($request);
+ public function getPayingUsPage($request);
 
 }
 

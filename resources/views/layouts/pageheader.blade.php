@@ -6,76 +6,49 @@
             </a>
         </div>
         <div class="col-6 top-menu-bar justify-content-center align-items-center m-auto">
-              {{-- Training MenuBar Details --}}
-              @foreach($menuBarDetails as $menu)
-        <div class="dropdown">
-            <a class="dropdown-toggle" href="{{ $menu['url'] ?? '#' }}" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"
-            @if (!empty($menu['url'])) target="_blank" @endif>
-                {{ $menu['title'] }}
-            </a>
-            @if(!empty($menu['submenus']))
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    @foreach($menu['submenus'] as $submenu)
-                        <li class="dropdown-submenu">
-                            <a class="dropdown-item {{ !empty($submenu['submenus']) ? 'dropdown-toggle' : '' }}" href="{{ $submenu['url'] ?? '#' }}"
-                               @if (!empty($submenu['url'])) target="_blank" @endif>
-                                {{ $submenu['title'] }}
-                            </a>
-                            @if(!empty($submenu['submenus']))
-                                <ul class="dropdown-menu">
-                                    @foreach($submenu['submenus'] as $subsubmenu)
-                                        <li>
-                                            <a class="dropdown-item" href="{{ $subsubmenu['url'] ?? '#' }}"
-                                               @if (!empty($subsubmenu['url'])) target="_blank" @endif>
-                                                {{ $subsubmenu['title'] }}
+
+            @foreach($menuBarDetails as $menu)
+            <nav class="menu-container">
+                <ul class="main-menu">
+                    <li class="menu-item">
+                        <a href="{{ $menu['url'] ?? '#' }}"
+                           @if (!empty($menu['url'])) target="_blank" @endif
+                           class="{{ !empty($menu['url']) ? 'active' : '' }}">
+                            {{ $menu['title'] }}
+                        </a>
+                        @if (!empty($menu['submenus']))
+                            <div class="mega-submenu">
+                                <ul class="sub-menu">
+                                    @foreach($menu['submenus'] as $submenu)
+                                        <li class="sub-menu-item">
+                                            <a href="{{ $submenu['url'] ?? '#' }}"
+                                               @if (!empty($submenu['url'])) target="_blank" @endif
+                                               class="{{ !empty($submenu['url']) ? 'active' : ''}}">
+                                                {{ $submenu['title'] }}
                                             </a>
+                                            @if (!empty($submenu['submenus']))
+                                                <ul class="nested-menu">
+                                                    @foreach($submenu['submenus'] as $nestedMenu)
+                                                        <li class="nested-menu-item">
+                                                            <a href="{{ $nestedMenu['url'] ?? '#' }}"
+                                                               @if (!empty($nestedMenu['url'])) target="_blank" @endif
+                                                               class="{{ !empty($nestedMenu['url']) ? 'active' : '' }}">
+                                                                {{ $nestedMenu['title'] }}
+                                                            </a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
                                         </li>
                                     @endforeach
                                 </ul>
-                            @endif
-                        </li>
-                    @endforeach
+                            </div>
+                        @endif
+                    </li>
                 </ul>
-            @endif
-        </div>
-    @endforeach
-
-            @foreach($menuBarDetails as $menu)
-            <div class="container">
-                <div class="dropdown">
-                    <a class="dropdown-toggle" href="{{ $menu['url'] ?? '#' }}" id="dropdownMenuLink"
-                        data-bs-toggle="dropdown" aria-expanded="false" @if (!empty($menu['url'])) target="_blank"
-                        @endif>
-                        {{ $menu['title'] }}
-                    </a>
-                    @if(!empty($menu['submenus']))
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        @foreach($menu['submenus'] as $submenu)
-                        <li class="dropdown-submenu">
-                            <a class="dropdown-item {{ !empty($submenu['submenus']) ? 'dropdown-toggle' : '' }}"
-                                href="{{ $submenu['url'] ?? '#' }}" @if (!empty($submenu['url'])) target="_blank"
-                                @endif>
-                                {{ $submenu['title'] }}
-                            </a>
-                            @if(!empty($submenu['submenus']))
-                            <ul class="dropdown-menu">
-                                @foreach($submenu['submenus'] as $subsubmenu)
-                                <li>
-                                    <a class="dropdown-item" href="{{ $subsubmenu['url'] ?? '#' }}"
-                                        @if(!empty($subsubmenu['url'])) target="_blank" @endif>
-                                        {{ $subsubmenu['title'] }}
-                                    </a>
-                                </li>
-                                @endforeach
-                            </ul>
-                            @endif
-                        </li>
-                        @endforeach
-                    </ul>
-                    @endif
-                </div>
-            </div>
-            @endforeach
+            </nav>
+        @endforeach
+           
 
             <a href="{{ route('contact.show')}}" class="nav-link" target="_blank">Contact</a>
 

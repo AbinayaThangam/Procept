@@ -18,4 +18,5 @@ return [
     'ADVANCED'=>'Advanced',
     'COURSE'=>'course',
     'COURSES'=>'courses',
+  'PUBLIC_FOLDER' =>'public://',
 ];

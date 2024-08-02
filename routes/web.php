@@ -71,3 +71,7 @@ Route::get('/events/{events_slug}/{events_slug1?}/{events_slug2?}', [HomeControl
 Route::get('/page/{page_slug}/{page_slug1?}/{page_slug2?}', [HomeController::class, 'getAllBasicPage'])->name('getAllBasicPage');
 Route::get('/team/{team_slug}/{team_slug1?}/{team_slug2?}', [HomeController::class, 'getAllTeam'])->name('getAllTeam');
 
+Route::get('/canada-job-grant', [HomeController::class, 'getCanadaJobGrantPage'])->name('canada-job-grant');
+Route::get('/paying_us', [HomeController::class, 'getPayingUsPage'])->name('paying-us');
+
+Route::get('/newupcoming-courses', [HomeController::class, 'showupcomingcourses'])->name('upcomingcourses');

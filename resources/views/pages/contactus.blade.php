@@ -1,6 +1,6 @@
 @extends('layouts.home')
 @section('content')
-@include('layouts.nav')
+@include('layouts.page_nav')
 <section class="contact-form my-5">
 
     <div class="container my-5">

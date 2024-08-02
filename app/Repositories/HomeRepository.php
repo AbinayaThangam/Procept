@@ -17,6 +17,7 @@ use App\Models\PublicPromoMessage;
 use App\Models\TaxonomyVocabulary;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use App\Models\FieldDataFieldCourseType;
 use App\Models\FieldDataFieldCourseTarget;
 
 class HomeRepository
@@ -94,10 +95,12 @@ class HomeRepository
             $decodedUrl = urldecode($currentUrl);
             $baseUrl = url()->to('/');
             $relativeUrl = Str::after($decodedUrl, $baseUrl);
-            $segment = AppConstants::COURSES . '/';
+            $segment = AppConstants::NODETYPE_EVENTS . '/';
             $relativeUrlAfterSegment = Str::after($relativeUrl, $segment);
             $urlAlias = UrlAlias::where('alias', $relativeUrlAfterSegment)->first();
+
             preg_match('/node\/(\d+)$/', $urlAlias->source, $matches);
+
             $nodeId = $matches[1];
 
 
@@ -234,14 +237,13 @@ class HomeRepository
 
                 $aboutus = Node::leftJoin('field_data_body', 'field_data_body.entity_id', '=', 'node.nid')
                     ->where('node.nid', '=', $value)
-                    ->select('node.title', 'field_data_body.body_value')
+                    ->select('node.title', 'field_data_body.body_value','node.nid')
                     ->where('node.status', AppConstants::NODE_STATUS)
                     ->first();
-
                 if ($aboutus) {
                     // Perform HTML content modification
                     $aboutus->body_value = str_replace(AppConstants::PRIVACY_POLICY_MAIL, AppConstants::PRIVACY_POLICY_SENDMAIL, $aboutus->body_value);
-
+$aboutus->body_value = $this->parseTabs($aboutus->body_value);
                     return $aboutus;
                 } else {
                     throw new Exception('No content found');
@@ -252,6 +254,58 @@ class HomeRepository
         } catch (\Exception $e) {
             return $e->getMessage();
         }
+    }
+    private function parseTabs($content)
+    {
+
+        $content = preg_replace('/\[tabs class="vertical"\]/', '<div class="tab-content">', $content);
+
+        $content = preg_replace('/\[\/tabs\]/', '</div>', $content);
+
+        $tabButtons = '';
+        $tabContents = '';
+        $isFirstTab = true;
+
+        $tabs = preg_split('/(\[tab title=".*?" icon=".*?"\]|\[\/tab\])/', $content, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+
+        $beforeFirstTab = '';
+        $insideTab = false;
+
+        foreach ($tabs as $tab) {
+            if (preg_match('/^\[tab title="(.*?)" icon="(.*?)"\]$/', $tab, $matches)) {
+                $tabTitle = htmlspecialchars($matches[1]);
+                $tabId = str_replace(' ', '-', $tabTitle);
+
+                if (!$insideTab) {
+                    $beforeFirstTab .= trim($tab);
+                    $insideTab = true;
+                }
+
+                $tabButtons .= '<li class="nav-item" role="presentation"><a class="nav-link' . ($isFirstTab ? ' active' : '') . '" id="' . $tabId . '-tab" data-bs-toggle="tab" href="#' . $tabId . '" role="tab">' . $tabTitle . '</a></li>';
+
+                $tabContents .= '<div class="container tab-pane' . ($isFirstTab ? ' active' : '') . '" id="' . $tabId . '">';
+                $isFirstTab = false;
+            } elseif ($tab === '[/tab]') {
+                $tabContents .= '</div>';
+                $insideTab = false;
+            } else {
+                if ($insideTab) {
+                    $tabContents .= trim($tab);
+                } else {
+                    $beforeFirstTab .= trim($tab);
+                }
+            }
+
+        }
+
+        $beforeFirstTab = preg_replace('/\[tab title=".*?" icon=".*?"\]/', '', $beforeFirstTab);
+
+        $tabsHtml = $beforeFirstTab;
+
+        $tabsHtml .= '<ul class="nav nav-tabs" role="tablist">' . $tabButtons . '</ul>';
+        $tabsHtml .= '<div class="tab-content">' . $tabContents . '</div>';
+
+        return $tabsHtml;
     }
 
 
@@ -701,7 +755,7 @@ class HomeRepository
             ->map(function ($course) {
                 $urlAlias = UrlAlias::where('source', AppConstants::TAXONOMY_TERM_COURSE . $course->tid)->first();
                 if ($urlAlias) {
-                    $course->url = str_replace(AppConstants::MENU_BAR_COURSE_TYPE, '', $urlAlias->alias);
+                    $course->url = route('course.type.details', ['courses_type' => str_replace(AppConstants::MENU_BAR_COURSE_TYPE, '', $urlAlias->alias)]);
                 } else {
                     $course->url = '';
                 }
@@ -714,8 +768,7 @@ class HomeRepository
                     'url' => $course->url,
                 ];
             })->toArray();
-
-            $trainingMenuBarDetails = [
+            $menuBarDetails = [
                 [
                     'title' => AppConstants::MENU_TRAINING,'url' => route('training.page'),
                     'submenus' => [
@@ -731,9 +784,6 @@ class HomeRepository
                         ['title' => AppConstants::SUBMENU_EXAM_PASS_GUARANTEE, 'url' => AppConstants::EXAM_PASS_GUARANTEE_URL],
                     ],
                 ],
-            ];
-
-            $menuBarDetails = [
             [
                 'title' => AppConstants::MENU_CONSULTING,
                 'submenus' => [
@@ -767,8 +817,7 @@ class HomeRepository
             ];
 
             return (object)[
-                'menuBarDetails' => $menuBarDetails,
-                'trainingMenuBarDetails' => $trainingMenuBarDetails
+                'menuBarDetails' => $menuBarDetails
             ];
 
         } catch (Exception $e) {
@@ -855,7 +904,6 @@ class HomeRepository
                 ->where('node.promote', AppConstants::NODE_PROMOTE)
                 ->where('node.status', AppConstants::NODE_STATUS)
                 ->orderBy('node.nid', 'desc')
-
                 ->get()
                 ->take(10)
                 ->map(function ($item) {
@@ -884,97 +932,117 @@ class HomeRepository
     public function getAllUpcomingCourses($request, $course_slug): object
     {
 
-        try {
+         try {
 
-            $todayDate = now()->startOfDay();
-            $currentUrl = url()->current();
-            $decodedUrl = urldecode($currentUrl);
-            $baseUrl = url()->to('/');
-            $relativeUrl = Str::after($decodedUrl, $baseUrl);
-            $segment = AppConstants::COURSES . '/';
-            $relativeUrlAfterSegment = Str::after($relativeUrl, $segment);
-            $urlAlias = UrlAlias::where('alias', $relativeUrlAfterSegment)->first();
-            preg_match('/node\/(\d+)$/', $urlAlias->source, $matches);
-            $nodeId = $matches[1];
+        $todayDate = now()->startOfDay();
+        $currentUrl = url()->current();
+        $decodedUrl = urldecode($currentUrl);
+        $baseUrl = url()->to('/');
+        $relativeUrl = Str::after($decodedUrl, $baseUrl);
+        $segment = AppConstants::COURSES . '/';
+        $relativeUrlAfterSegment = Str::after($relativeUrl, $segment);
+        $urlAlias = UrlAlias::where('alias', $relativeUrlAfterSegment)->first();
+        preg_match('/node\/(\d+)$/', $urlAlias->source, $matches);
+        $nodeId = $matches[1];
 
-            //Courses Content
-            $getAllUpcomingCourses = Node::with('fieldDataFieldCourseId', 'fieldDataFieldDuration')
-                     ->LeftJoin('field_data_field_course_level', 'field_data_field_course_level.entity_id', 'node.nid')
-                     ->LeftJoin('taxonomy_term_data', 'taxonomy_term_data.tid', 'field_data_field_course_level.field_course_level_tid')
-                     ->LeftJoin('field_data_field_abstract', 'field_data_field_abstract.entity_id', '=', 'node.nid')
-                     ->LeftJoin('field_data_field_brochure_link', 'field_data_field_brochure_link.entity_id', 'node.nid')
-                     ->LeftJoin('field_data_field_pdu', 'field_data_field_pdu.entity_id', 'node.nid')
-                     ->where('node.nid', $nodeId)
-                     ->where('node.status', AppConstants::NODE_STATUS)
-                     ->first();
+        //Courses Content
+        $getAllUpcomingCourses = Node::with('fieldDataFieldCourseId', 'fieldDataFieldDuration')
+                 ->LeftJoin('field_data_field_course_level', 'field_data_field_course_level.entity_id', 'node.nid')
+                 ->LeftJoin('taxonomy_term_data', 'taxonomy_term_data.tid', 'field_data_field_course_level.field_course_level_tid')
+                 ->LeftJoin('field_data_field_abstract', 'field_data_field_abstract.entity_id', '=', 'node.nid')
+                 ->LeftJoin('field_data_field_brochure_link', 'field_data_field_brochure_link.entity_id', 'node.nid')
+                 ->LeftJoin('field_data_field_pdu', 'field_data_field_pdu.entity_id', 'node.nid')
+                 ->where('node.nid', $nodeId)
+                 ->where('node.status', AppConstants::NODE_STATUS)
+                 ->first();
 
-            //Courses testinomials
-            $getTestinomials = FieldDataFieldCourseTarget::with('FieldDataBodyCourse', 'FieldDataFieldTestimonialPositionNode', 'FieldDataFieldTestimonialImage.FileManagedTestimonialImage')
-                  ->join('node', 'node.nid', 'field_data_field_course_target.field_course_target_target_id')
-                  ->where('field_course_target_target_id', $nodeId)
-                  ->where('node.status', AppConstants::NODE_STATUS)
-                  ->get();
+        //Courses testinomials
+        $getTestinomials = FieldDataFieldCourseTarget::with('FieldDataBodyCourse', 'FieldDataFieldTestimonialPositionNode', 'FieldDataFieldTestimonialImage.FileManagedTestimonialImage')
+              ->join('node', 'node.nid', 'field_data_field_course_target.entity_id')
+              ->where('field_data_field_course_target.field_course_target_target_id', $nodeId)
+              ->where('node.status', AppConstants::NODE_STATUS)
+              ->get();
 
-            //Courses upcoming session
-            $getUpcomingSession = Node::with('fieldDataFieldCourseInstructor.fieldCourseInstructorNode', 'fieldDataFieldInstructor1.fieldDataFieldInstructorNode1')
-                  ->join('field_data_field_course', 'field_data_field_course.entity_id', '=', 'node.nid')
-                  ->join('field_data_field_choose_session_type', 'field_data_field_choose_session_type.entity_id', '=', 'node.nid')
-                  ->leftJoin('field_data_field_session_dates', 'field_data_field_session_dates.entity_id', '=', 'node.nid')
-                  ->leftJoin('field_data_field_start_date1', 'field_data_field_start_date1.entity_id', '=', 'node.nid')
-                  ->join('field_data_field_resale', 'field_data_field_resale.entity_id', 'node.nid')
-                  ->join('field_data_field_procept_sell_ticket_course', 'field_data_field_procept_sell_ticket_course.entity_id', 'field_data_field_resale.field_resale_value')
-                  ->join('field_data_field_if_yes_eventbrite_link', 'field_data_field_if_yes_eventbrite_link.entity_id', 'field_data_field_resale.field_resale_value')
-                  ->join('field_data_field_session_loc_location', 'field_data_field_session_loc_location.entity_id', 'node.nid')
-                  ->join('field_data_field_online', 'field_data_field_online.entity_id', 'field_data_field_session_loc_location.field_session_loc_location_value')
-                  ->where(function ($query) {
-                      $query->where('field_data_field_choose_session_type.field_choose_session_type_value', AppConstants::SESSION_TYPE_CONTIGUOUS)
-                        ->orWhere('field_data_field_choose_session_type.field_choose_session_type_value', AppConstants::SESSION_TYPE_BROKEN_UP);
-                  })
-                  ->where(function ($query) use ($todayDate) {
-                      $query->where('field_data_field_session_dates.field_session_dates_value', '>=', $todayDate)
-                         ->orWhere('field_data_field_start_date1.field_start_date1_value', '>=', $todayDate);
-                  })
-                  ->where('node.status', AppConstants::NODE_STATUS)
-                  ->where('field_data_field_course.field_course_target_id', $nodeId)
-                  ->where('field_data_field_procept_sell_ticket_course.field_procept_sell_ticket_course_value', AppConstants::FIELD_RESALES_YES)
-                  ->orderBy('field_data_field_session_dates.field_session_dates_value', 'asc')
-                  ->orderBy('field_data_field_start_date1.field_start_date1_value', 'asc')
-                  ->take(3)
-                  ->get();
+        //Courses upcoming session
+        $getUpcomingSession = Node::with('fieldDataFieldCourseInstructor.fieldCourseInstructorNode', 'fieldDataFieldInstructor1.fieldDataFieldInstructorNode1')
+              ->join('field_data_field_course', 'field_data_field_course.entity_id', '=', 'node.nid')
+              ->join('field_data_field_choose_session_type', 'field_data_field_choose_session_type.entity_id', '=', 'node.nid')
+              ->leftJoin('field_data_field_session_dates', 'field_data_field_session_dates.entity_id', '=', 'node.nid')
+              ->leftJoin('field_data_field_start_date1', 'field_data_field_start_date1.entity_id', '=', 'node.nid')
+              ->join('field_data_field_resale', 'field_data_field_resale.entity_id', 'node.nid')
+              ->join('field_data_field_procept_sell_ticket_course', 'field_data_field_procept_sell_ticket_course.entity_id', 'field_data_field_resale.field_resale_value')
+              ->join('field_data_field_if_yes_eventbrite_link', 'field_data_field_if_yes_eventbrite_link.entity_id', 'field_data_field_resale.field_resale_value')
+              ->join('field_data_field_session_loc_location', 'field_data_field_session_loc_location.entity_id', 'node.nid')
+              ->join('field_data_field_online', 'field_data_field_online.entity_id', 'field_data_field_session_loc_location.field_session_loc_location_value')
+              ->where(function ($query) {
+                  $query->where('field_data_field_choose_session_type.field_choose_session_type_value', AppConstants::SESSION_TYPE_CONTIGUOUS)
+                    ->orWhere('field_data_field_choose_session_type.field_choose_session_type_value', AppConstants::SESSION_TYPE_BROKEN_UP);
+              })
+              ->where(function ($query) use ($todayDate) {
+                  $query->where('field_data_field_session_dates.field_session_dates_value', '>=', $todayDate)
+                     ->orWhere('field_data_field_start_date1.field_start_date1_value', '>=', $todayDate);
+              })
+              ->where('node.status', AppConstants::NODE_STATUS)
+              ->where('field_data_field_course.field_course_target_id', $nodeId)
+              ->where('field_data_field_procept_sell_ticket_course.field_procept_sell_ticket_course_value', AppConstants::FIELD_RESALES_YES)
+              ->orderBy('field_data_field_session_dates.field_session_dates_value', 'asc')
+              ->orderBy('field_data_field_start_date1.field_start_date1_value', 'asc')
+              ->take(3)
+              ->get();
 
-            //courses video testinomials
-            $getVideoTestinomials = Block::join('block_custom', 'block_custom.bid', '=', 'block.delta')
-                 ->where('pages', 'node/'.$nodeId)
-                 ->where('visibility', AppConstants::VISIBILITY)
-                 ->where('status', AppConstants::NODE_STATUS)
-                 ->where('theme', AppConstants::EXCEPTION)->first();
+        //courses video testinomials
+        $getVideoTestinomials = Block::join('block_custom', 'block_custom.bid', '=', 'block.delta')
+             ->where('pages', 'node/'.$nodeId)
+             ->where('visibility', AppConstants::VISIBILITY)
+             ->where('status', AppConstants::NODE_STATUS)
+             ->where('theme', AppConstants::EXCEPTION)->first();
 
-            if ($getVideoTestinomials && !empty($getVideoTestinomials->body)) {
 
-                $dom = new DOMDocument();
-                libxml_use_internal_errors(true);
-                $dom->loadHTML($getVideoTestinomials->body);
-                libxml_clear_errors();
-                $iframes = $dom->getElementsByTagName('iframe');
-                $iframeSrcs = [];
+        if ($getVideoTestinomials && !empty($getVideoTestinomials->body)) {
 
-                foreach ($iframes as $iframe) {
+            $dom = new DOMDocument();
+            libxml_use_internal_errors(true);
+            $dom->loadHTML($getVideoTestinomials->body);
+            libxml_clear_errors();
+            $iframes = $dom->getElementsByTagName('iframe');
+            $iframeSrcs = [];
 
-                    $src = $iframe->getAttribute('src');
-                    $iframeSrcs[] = $src;
-                }
+            foreach ($iframes as $iframe) {
 
-            } else {
-                $iframeSrcs = [];
+                $src = $iframe->getAttribute('src');
+                $iframeSrcs[] = $src;
             }
 
-            return (object) [
-              'course' => $getAllUpcomingCourses,
-              'testimonials' => $getTestinomials,
-              'upcomingSession' => $getUpcomingSession,
-              'getVideoTestinomials' => $getVideoTestinomials,
-              'videolinkiframe' => $iframeSrcs,
-            ];
+        } else {
+            $iframeSrcs = [];
+        }
+
+        //courses type
+        $getCoursesType = FieldDataFieldCourseType::where('entity_id', $nodeId)->first();
+
+        if ($getCoursesType->field_course_type_tid) {
+            $urlAlias = UrlAlias::where('source', AppConstants::TAXONOMY_TERM_COURSE . $getCoursesType->field_course_type_tid)
+                ->select('alias')
+                ->first();
+            $aliasParts = explode('/', $urlAlias->alias);
+        }
+        if ($urlAlias) {
+            $courseTypeImage = $this->getCourseTypeImageDetails($aliasParts[1]);
+        }
+
+
+        $trainingDetails = $this->getContentByAlias($relativeUrlAfterSegment);
+
+
+        return (object) [
+          'course' => $getAllUpcomingCourses,
+          'testimonials' => $getTestinomials,
+          'upcomingSession' => $getUpcomingSession,
+          'getVideoTestinomials' => $getVideoTestinomials,
+          'videolinkiframe' => $iframeSrcs,
+          'getCourseTypeImage'=>$courseTypeImage,
+          'trainingDetails'=>$trainingDetails
+        ];
         } catch (\Exception $e) {
 
             Log::error('Error in fetching all upcoming courses', [
@@ -1087,7 +1155,6 @@ class HomeRepository
     }
 
 
-
     public function getAllCourseType($request, $course_type_slug): object
     {
         try {
@@ -1120,6 +1187,7 @@ class HomeRepository
                 //cm
                 $courseTypeUrl = AppConstants::COURSE_TYPE_LEADERSHIP_COURSES_URL;
             }
+
 
             $urlAlias = UrlAlias::where('alias', AppConstants::MENU_BAR_COURSE_TYPE . $course_type_slug)->first();
 
@@ -1158,10 +1226,12 @@ class HomeRepository
 
             $trainingDetails = $this->getContentByAlias($courseTypeUrl);
 
+            $getcoursesTypeImage = $this->getCourseTypeImageDetails($course_type_slug);
 
             return (object) [
                 'trainingDetails' => $trainingDetails,
-                'getcourseslevel' => $getcourseslevel
+                'getcourseslevel' => $getcourseslevel,
+                'getcoursesTypeImage' => $getcoursesTypeImage
             ];
         } catch (\Exception $e) {
 
@@ -1182,7 +1252,7 @@ class HomeRepository
         try {
             $search = $request->input('title');
 
-            $filterPageCourse = Node::join('field_data_field_active_course', 'field_data_field_active_course.entity_id', '=', 'node.nid')
+            $filterPageCourse = Node::leftjoin('field_data_field_active_course', 'field_data_field_active_course.entity_id', '=', 'node.nid')
             ->leftJoin('field_data_field_event_type', 'field_data_field_event_type.entity_id', '=', 'node.nid')
             ->leftJoin('field_data_field_members_visible', 'field_data_field_members_visible.entity_id', '=', 'node.nid')
             ->where(function ($query) {
@@ -1235,7 +1305,7 @@ class HomeRepository
             $decodedUrl = urldecode($currentUrl);
             $baseUrl = url()->to('/');
             $relativeUrl = Str::after($decodedUrl, $baseUrl);
-            $segment = AppConstants::COURSES . '/';
+            $segment = AppConstants::NODETYPE_ARTICLE . '/';
             $relativeUrlAfterSegment = Str::after($relativeUrl, $segment);
             $urlAlias = UrlAlias::where('alias', $relativeUrlAfterSegment)->first();
             preg_match('/node\/(\d+)$/', $urlAlias->source, $matches);
@@ -1244,10 +1314,19 @@ class HomeRepository
 
 
             $getArticlePage = Node::with('fieldDataBody')->where('node.type', AppConstants::ARTICLE)
-            ->where('node.status', AppConstants::NODE_STATUS)
-            ->where('node.nid', $nodeId)
-            ->first();
+                ->where('node.status', AppConstants::NODE_STATUS)
+                ->where('node.nid', $nodeId)
+                ->first();
 
+              if ($getArticlePage && $getArticlePage->fieldDataBody->body_value) {
+
+                if ($getArticlePage && $getArticlePage->fieldDataBody->body_value) {
+                    $getArticlePage->fieldDataBody->body_value = str_replace(AppConstants::ARTICLE_PAGE_REGISTER_BUTTON, '<button type="button" class="dexp-btn-reflect">', $getArticlePage->fieldDataBody->body_value);
+
+                    $getArticlePage->fieldDataBody->body_value = str_replace(AppConstants::ARTICLE_PAGE_REGISTER_BUTTON_CLOSE, '</button>', $getArticlePage->fieldDataBody->body_value);
+                }
+            }
+            //  dd($getArticlePage);
             return (object) $getArticlePage;
 
         } catch (\Exception $e) {
@@ -1262,6 +1341,7 @@ class HomeRepository
         }
     }
 
+    
     public function getAllBasicPage($request, $page_slug): object
     {
         try {
@@ -1269,7 +1349,7 @@ class HomeRepository
             $decodedUrl = urldecode($currentUrl);
             $baseUrl = url()->to('/');
             $relativeUrl = Str::after($decodedUrl, $baseUrl);
-            $segment = AppConstants::COURSES . '/';
+            $segment = AppConstants::PAGE . '/';
             $relativeUrlAfterSegment = Str::after($relativeUrl, $segment);
             $urlAlias = UrlAlias::where('alias', $relativeUrlAfterSegment)->first();
             preg_match('/node\/(\d+)$/', $urlAlias->source, $matches);
@@ -1303,7 +1383,7 @@ class HomeRepository
             $decodedUrl = urldecode($currentUrl);
             $baseUrl = url()->to('/');
             $relativeUrl = Str::after($decodedUrl, $baseUrl);
-            $segment = AppConstants::COURSES . '/';
+            $segment = AppConstants::TEAM . '/';
             $relativeUrlAfterSegment = Str::after($relativeUrl, $segment);
             $urlAlias = UrlAlias::where('alias', $relativeUrlAfterSegment)->first();
             preg_match('/node\/(\d+)$/', $urlAlias->source, $matches);
@@ -1377,11 +1457,14 @@ class HomeRepository
                 return $getPMCourses;
             });
 
+            $getCoursesTypeImage=$this->getCourseTypeImageDetails($course_type_alias);
+
             $trainingDetails = $this->getContentByAlias($course_alias);
 
             return (object) [
                 'trainingDetails' => $trainingDetails,
-                'getCoursesDetails' => $getCoursesDetails
+                'getCoursesDetails' => $getCoursesDetails,
+                'getCoursesTypeImage' => $getCoursesTypeImage
             ];
         } catch (\Exception $e) {
 
@@ -1405,6 +1488,7 @@ class HomeRepository
     {
         $course_alias = AppConstants::COURSE_TYPE_CM_COURSES_URL;
         $course_type_alias = AppConstants::COURSE_TYPE_CM_COURSES;
+
         return $this->getCoursesDetails($request, $course_alias, $course_type_alias);
     }
 
@@ -1421,4 +1505,38 @@ class HomeRepository
         return $this->getCoursesDetails($request, $course_alias, $course_type_alias);
     }
 
+    public function getCourseTypeImageDetails($course_type_url): string
+    {
+        try {
+
+            if ($course_type_url == AppConstants::COURSE_TYPE_PM_COURSES) {
+                $courseTypeImage = AppConstants::COURSE_TYPE_PM_COURSES_IMAGE;
+            } else {
+                $courseTypeImage = AppConstants::COURSE_TYPE_CM_COURSES_IMAGE;
+            }
+
+            return (string) $courseTypeImage;
+
+        } catch (\Exception $e) {
+
+            Log::error('Error in fetching get course type image details', [
+                'function' => 'getCourseTypeImageDetails',
+                'line' => $e->getLine(),
+                'message' => $e->getMessage()
+            ]);
+
+            return (string) [];
+        }
+    }
+    public function getCanadaJobGrantPage($request)
+    {
+        return $this->getContentByAlias(AppConstants::PAGE_CANADA_JOB_GRANT);
+
+    }
+    public function getPayingUsPage($request)
+    {
+
+        return $this->getContentByAlias(AppConstants::PAGE_PAYING_US);
+
+    }
 }

@@ -379,7 +379,6 @@ $(document).ready(function () {
                         let nid = course.nid;
                         let node_type = course.type;
                         let url = course.url;
-                        console.log(node_type);
 
                         $("#filter-page-courses-container").append(
                             `<li class='list-unstyled course-item' data-nid='${nid}' data-node-type='${node_type}' data-url='${url}' >${title}</li>`
@@ -420,7 +419,6 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
-                console.error("Error:", error);
                 $("#filter-courses-list").hide();
                 $(".filter-courses-container").hide();
             },
@@ -455,3 +453,4 @@ $(document).ready(function () {
         }
     });
 });
+
