@@ -57,7 +57,6 @@ $(document).ready(function () {
                 title: title,
             },
             success: function (response) {
-                console.log("Success:", response);
                 $("#filter-courses-container").empty();
 
                 if (response.filtercourse && response.filtercourse.length > 0) {
@@ -66,10 +65,6 @@ $(document).ready(function () {
                         let title = course.title;
                         let nid = course.nid;
                         let url = course.url;
-
-
-
-                        console.log(url);
                         $("#filter-courses-container").append(
                             `<li class='list-unstyled course-item' data-nid='${nid}' data-url='${url}' >${title}</li>`
                         );
@@ -106,7 +101,6 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
-                console.error("Error:", error);
                 $("#filter-courses-list").hide();
                 $(".filter-courses-container").hide();
             },
@@ -195,3 +189,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+$(document).ready(function() {
+    $('#read-more-btn').on('click', function() {
+        var $snippet = $('#body-snippet');
+        var $fullBody = $('#full-body');
+        var $btn = $(this);
+
+        if ($fullBody.is(':hidden')) {
+            $fullBody.show();
+            $snippet.hide();
+            $btn.text('Read Less');
+        } else {
+            $fullBody.hide();
+            $snippet.show();
+            $btn.text('Read More');
+        }
+    });
+});

@@ -10,23 +10,25 @@ body {
     font-family: "Acumin Variable Concept SemiCondensed", sans-serif;
 }
 
-.video-banner-container {
+.image-banner-container {
     position: relative;
-    max-width: 100%;
+    overflow: hidden;
+    height: 524px;
 }
-
-.training-video-banner {
+.training-image-banner {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 100%;
+    overflow: auto;
 }
 
-.training-video-banner video {
-    width: 100%;
-    height: 500px; /* Adjust height as needed */
-    object-fit: cover;
+.banner-image {
+    width: 100%; /* Make sure the image takes up the full width */
+    object-fit: cover; /* Maintain aspect ratio while covering the container */
 }
-
-
 
 .training.filter-courses-container {
     width: 100%;
@@ -51,23 +53,14 @@ body {
     z-index: 2;
 }
 
-
 .col-9.training-content {
     font-size: 18px;
     line-height: 1.8rem;
     font-family: "Acumin Variable Concept SemiCondensed", sans-serif;
 }
 
-.training-management-course h2 {
-    color: #00528a;
-    font-size: 28px;
-    font-weight: 600;
-    margin-top: 0;
-    text-align: center;
-}
 .course-level.search-container {
     padding: 0px 22px;
-    position: relative;
     margin-left: 32%;
     margin-top: -3%;
 }
@@ -85,26 +78,29 @@ img.managemnt-logo {
 }
 
 .training-contact-info.align-items-center {
-    margin-top: -20%;
+    margin-top: -17%;
     position: relative;
     display: flex;
-    margin-right: -9%;
+    margin-right: -46px;
     font-size: 12px;
-    max-width: 254px;
+    max-width: 220px;
+}
+.social-icons.justify-content-around.d-flex {
+    position: relative;
+    margin-top: 5%;
 }
 .col-md-10.d-flex.training-search-box {
     width: 100%;
     border: 1px solid #898484cc;
     padding: 2px;
     background-color: #fff;
-    max-height: 38px;
+    max-height: 30px;
     height: 100%;
     position: relative;
-    left: 51%;
+    left: 53%;
     transform: translateX(-50%);
-    max-width: 336px;
+    max-width: 292px;
 }
-
 img.img-fluid.training-search-icon.search-courses {
     width: 100%;
     max-width: 20px;
@@ -114,9 +110,10 @@ img.img-fluid.training-search-icon.search-courses {
 }
 img.img-fluid.training-search-icon.page-search-courses {
     width: 100%;
-    max-width: 20px;
-    height: 60%;
-    margin-top: 2%;
+    max-width: 15px;
+    height: 66%;
+    margin-right: -3px;
+    margin-top: 1%;
     position: relative;
 }
 img.beginner-course-logo,
@@ -125,7 +122,7 @@ img.advanced-course-logo {
     width: 100%;
     max-width: 95px;
     position: relative;
-    margin-left: 699px;
+    margin-left: 500px;
     margin-top: 4%;
 }
 
@@ -154,50 +151,21 @@ h5.beginner-course-title {
     color: #ed872b;
     position: relative;
     margin-top: 2%;
+    left: -10%;
 }
 
 h5.intermediate-course-title {
-    color: #3295d7;
+    color: #3d90c7;
     position: relative;
     margin-top: 2%;
+    left: -10%;
 }
 
 h5.advanced-course-title {
     color: #84ce05;
     position: relative;
     margin-top: 2%;
-}
-
-.row.course-level {
-    position: relative;
-    margin-top: 2%;
-    max-width: 1100px;
-    margin-left: 265px;
-    width: 100%;
-    line-height: 1rem;
-    margin-bottom: 3%;
-}
-.col-3.course-id {
-    flex: 0 0 auto;
-    width: 11%;
-}
-.col-6.course-name {
-    flex: 0 0 auto;
-    width: 52%;
-}
-p.sub-title-course {
-    font-weight: 600;
-    font-size: 12px;
-    color: #000;
-}
-
-.row.advertisement {
-    height: 350px;
-}
-.col-3.course-duration {
-    /* width: 38%; */
-    position: relative;
-    margin-left: 9%;
+    left: -10%;
 }
 
 .col-6.jobs-ad {
@@ -207,7 +175,6 @@ p.sub-title-course {
 .col-6.newcomer-ad {
     background-color: #00528a;
 }
-
 p.ad-course {
     font-size: 18px;
     font-weight: 600;
@@ -218,53 +185,61 @@ p.ad-course {
     color: #000;
     text-decoration: underline;
 }
-.course-name a {
-    text-decoration: underline;
-    color: #000;
+.col-3.course-duration p {
     font-size: 16px;
-    font-weight: 600;
-}
-.course-id {
-    font-family: "Acumin Variable Concept SemiCondensed", sans-serif;
-}
-.col-3 p {
-    font-size: 16px;
-    font-weight: 600;
     color: #000;
 }
+
+.course-header-item.col-7,
+.course-header-item.col-3,
+.course-header-item.col-2,
 p.sub-title-course {
     font-size: 12px;
+    font-weight: 600;
+    font-family: "Acumin Variable Concept SemiCondensed", sans-serif;
 }
-section#courses-level-container{
-    background-color: #f6f3e9;
+.courses-level {
+    padding-left: 78px;
+}
+.row.course-body.container-fluid.mt-2 {
+    line-height: 2.2rem;
+}
+.col-7.course-title a {
+    font-weight: 500;
+    text-decoration: underline;
+    color: #000;
+}
+section#courses-level-container {
+    background-color: #e5e2d8d9;
     margin-top: -51px;
-
 }
-#advertisement-courses-job{
+#advertisement-courses-job {
     margin-top: -41px;
 }
-
 
 .form-control {
     display: flex;
     width: 100%;
-    padding: 16px 24px;
+    padding: 11px 6px;
     font-size: 0.9rem;
     color: #ccc;
     position: relative;
     font-weight: 400;
+    font-size: 12px;
     line-height: 1.5;
 }
-.overlay.training-text-container {
+
+.overlay.training-landing-container {
     border: 1px solid #645b5b;
     position: absolute;
-    top: 215px;
+    top: 226px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -13%);
+    /* transform: translateX(-50%); */
     max-width: 958px;
     width: 100%;
     height: auto;
-    background-color: #ebe7e5a6;
+    background-color: #ffffffe6;
     color: #000;
     display: flex;
     flex-direction: column;
@@ -275,7 +250,6 @@ section#courses-level-container{
     backdrop-filter: blur(-34px);
     z-index: 5;
 }
-
 /* training landing page */
 img.training-banner {
     object-fit: cover;
@@ -285,26 +259,7 @@ img.training-banner {
 h3 {
     text-align: center;
 }
-.overlay.training-landing-container {
-    border: 1px solid #645b5b;
-    position: absolute;
-    top: 215px;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 958px;
-    width: 100%;
-    height: auto;
-    background-color: #ebe7e5a6;
-    color: #000;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    text-align: left;
-    padding: 20px;
-    backdrop-filter: blur(-34px);
-    z-index: 5;
-}
+
 .col-5th {
     width: 20%;
     float: left;
@@ -332,12 +287,16 @@ img.training-courses-button {
     left: 20px;
 }
 img.training-courses-button.mb-5 {
-    margin-top: -13px;
+    margin-top: 11px;
 }
 img.training-courses-button.mb-3 {
     margin-top: 24px;
     position: relative;
     left: 30px;
+}
+section#training-landing-credits {
+    height: 268px;
+    background-color: #8696a038;
 }
 img.training-courses-banner {
     width: 100%;
@@ -379,20 +338,21 @@ h4.exampass-credits-title {
 p.training-credits-content {
     position: relative;
     text-align: center;
-    left: 13px;
-
+    padding: 38px;
     font-size: 16px;
+    top: -10%;
 }
 a.training-credits-link {
     position: relative;
     left: 37%;
     color: #84ce05;
-    top: 11%;
+    top: -25%;
     text-decoration: underline;
 }
 a.earn-credits-link {
     position: relative;
     left: 39%;
+    top: -27%;
     color: #ed872b;
     text-decoration: underline;
 }
@@ -400,19 +360,113 @@ a.exampass-credits-link {
     position: relative;
     left: 39%;
     color: #0099ff;
-    top: 11%;
+    top: -27%;
     text-decoration: underline;
 }
-#advertisement-courses-job {
-    margin-top: 53px;
+.col-6.newcomer-ad {
+    max-width: 50%;
+    background-color: #00528a;
 }
+
 img.training-ads-banner {
     height: 350px;
-    max-width: 900px;
+    max-width: 877px;
+    left: -23%;
 }
 img.newcomer-ads-banner {
     height: 350px;
     position: relative;
     right: 2%;
     max-width: 677px;
+}
+.upcoming-course-link {
+    background-color: #e5f3fc;
+    position: relative;
+    margin-top: -2%;
+}
+
+.overlay.training-text-container {
+    border: 1px solid #645b5b;
+    position: absolute;
+    top: 146px;
+    left: 50%;
+    transform: translate(-50%, -13%);
+    max-width: 958px;
+    width: 100%;
+    height: auto;
+    background-color: #ffffffc4;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    padding: 20px;
+    backdrop-filter: blur(-34px);
+    z-index: 5;
+}
+
+.training-text-container {
+    position: relative;
+    max-height: 200px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+#full-body {
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+#full-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+#full-body::-webkit-scrollbar-thumb:hover {
+    background-color: #050000;
+}
+.training-management-course h2 {
+    color: #00528a;
+    font-size: 22px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+section.courses-level-container {
+    background-color: #e5e2d8d9;
+    padding-bottom: 115px;
+}
+
+/* new changes 2-08 */
+
+.overlay.individualcourse-text-container {
+    border: 1px solid #645b5b;
+    position: absolute;
+    margin-top: 255px;
+    padding-top: 20px;
+    text-transform: uppercase;
+    left: 50%;
+    transform: translate(-50%, -13%);
+    max-width: 939px;
+    width: 100%;
+    height: auto;
+    background-color: #ffffffc4;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+    padding: 13px;
+    backdrop-filter: blur(-34px);
+    z-index: 5;
+}
+img.individualcourse-banner-image {
+    width: 100%;
+    object-fit: cover;
+    height: 300px;
+}
+.container.individualcourse-management {
+    margin-top: 11px;
 }

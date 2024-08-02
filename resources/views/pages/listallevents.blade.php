@@ -1,7 +1,7 @@
 @extends('layouts.home')
 
 @section('content')
-@include('layouts.nav')
+@include('layouts.page_nav')
 
 <div class="container event-all-list mt-5">
     <div class="row mt-5">

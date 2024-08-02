@@ -160,4 +160,11 @@ class AppConstants
      const  COURSE_TYPE_MANAGEMENT_COURSES_URL= 'page/management-courses';
      const  COURSE_TYPE_TRAIN_THE_TRAINER_COURSES_URL= 'page/train-trainer-courses';
 
+     //Course Type Image
+    const  COURSE_TYPE_PM_COURSES_IMAGE= 'project_management_bg.jpeg';
+    const  COURSE_TYPE_CM_COURSES_IMAGE= 'change_management_bg.jpeg';
+    const ARTICLE_PAGE_REGISTER_BUTTON = '[button type="button"&nbsp; class="dexp-btn-reflect"]eCourse Information[/button]';
+const ARTICLE_PAGE_REGISTER_BUTTON_CLOSE ='[/button]';
+     const PAGE_CANADA_JOB_GRANT = 'page/canada-job-grant';
+const PAGE_PAYING_US = 'paying_us';
 }

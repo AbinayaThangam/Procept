@@ -4,6 +4,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 @include('layouts.nav')
+
+
 @include('layouts.header')
 
 
@@ -424,7 +426,7 @@
                         <h6>WORKING WITH US</h6>
                         <ul class="working-with-us-menu">
                             <li><a href="#">Careers</a></li>
-                            <li><a href="#">Paying Bills</a></li>
+                            <li><a href="{{ route('paying-us') }}" target="_blank">Paying Bills</a></li>
                             <li><a href="#">Request a Price Quote</a></li>
                             <li><a href="{{ config('app_constants.CUSTOMER_PORTAL') }}" target="_blank">Customer
                                     Portal</a></li>

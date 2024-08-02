@@ -190,5 +190,17 @@ class HomeService implements HomeServiceInterface
         return $this->homeRespository->getleadershipCoursesPage($request);
     }
 
+    public function getCourseTypeImageDetails($course_type_url)
+    {
+        return $this->homeRespository->getCourseTypeImageDetails($course_type_url);
+    }
+    public function getCanadaJobGrantPage($request)
+    {
+        return $this->homeRespository->getCanadaJobGrantPage($request);
+    }
+   public function getPayingUsPage($request)
+    {
+        return $this->homeRespository->getPayingUsPage($request);
+    }
 }
 
